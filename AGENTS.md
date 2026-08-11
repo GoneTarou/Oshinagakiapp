@@ -4,7 +4,11 @@
 
 ## アプリの仕様
 
-アプリの仕様はREADME.mdを確認してください
+アプリの仕様は[docs/specification.md](docs/specification.md)を参照してください。
+
+## デザインルール
+
+デザインルールは[docs/design.md](docs/design.md)を参照してください。
 
 ## ディレクトリ構造
 
