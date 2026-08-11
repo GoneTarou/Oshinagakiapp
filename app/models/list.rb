@@ -6,7 +6,7 @@ class List < ApplicationRecord
   before_validation :generate_token, on: :create
 
   validates :token, presence: true, uniqueness: true
-  validate :event_occurrence_belongs_to_event
+  validate :event_occurrence_requirement
   validate :has_at_most_twenty_items
   validate :has_at_most_one_featured_item
 
@@ -16,11 +16,14 @@ class List < ApplicationRecord
     self.token ||= SecureRandom.urlsafe_base64(24)
   end
 
-  def event_occurrence_belongs_to_event
-    return if event_occurrence.blank? || event.blank?
-    return if event_occurrence.event_id == event_id
+  def event_occurrence_requirement
+    return if event.blank?
 
-    errors.add(:event_occurrence, "は選択したイベントに属していません")
+    if event.name == "その他" && event_occurrence_id.present?
+      errors.add(:event_occurrence, "その他では開催回を指定できません")
+    elsif event.name != "その他" && event_occurrence_id.blank?
+      errors.add(:event_occurrence, "開催回を選択してください")
+    end
   end
 
   def has_at_most_twenty_items
