@@ -10,6 +10,6 @@ class CreateListItems < ActiveRecord::Migration[8.1]
       t.timestamps
     end
 
-    add_index :list_items, [:list_id, :space_number], unique: true
+    add_index :list_items, [ :list_id, :space_number ], unique: true
   end
 end
