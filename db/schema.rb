@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_11_062006) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_11_070000) do
   create_table "event_occurrences", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "event_id", null: false
     t.integer "number"
     t.datetime "updated_at", null: false
+    t.index ["event_id", "number"], name: "index_event_occurrences_on_event_id_and_number", unique: true
     t.index ["event_id"], name: "index_event_occurrences_on_event_id"
   end
 
@@ -23,6 +24,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_11_062006) do
     t.datetime "created_at", null: false
     t.string "name"
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_events_on_name", unique: true
   end
 
   add_foreign_key "event_occurrences", "events"
