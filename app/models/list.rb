@@ -1,0 +1,37 @@
+class List < ApplicationRecord
+  belongs_to :event
+  belongs_to :event_occurrence, optional: true
+  has_many :list_items, dependent: :restrict_with_error
+
+  before_validation :generate_token, on: :create
+
+  validates :token, presence: true, uniqueness: true
+  validate :event_occurrence_belongs_to_event
+  validate :has_at_most_twenty_items
+  validate :has_at_most_one_featured_item
+
+  private
+
+  def generate_token
+    self.token ||= SecureRandom.urlsafe_base64(24)
+  end
+
+  def event_occurrence_belongs_to_event
+    return if event_occurrence.blank? || event.blank?
+    return if event_occurrence.event_id == event_id
+
+    errors.add(:event_occurrence, "は選択したイベントに属していません")
+  end
+
+  def has_at_most_twenty_items
+    return if list_items.size <= 20
+
+    errors.add(:list_items, "は20件以内で登録してください")
+  end
+
+  def has_at_most_one_featured_item
+    return if list_items.count(&:is_featured?) <= 1
+
+    errors.add(:list_items, "イチ推しは1件まで登録できます")
+  end
+end
