@@ -2,7 +2,7 @@ class List < ApplicationRecord
   belongs_to :event
   belongs_to :event_occurrence, optional: true
   has_many :list_items, dependent: :restrict_with_error
-  accepts_nested_attributes_for :list_items
+  accepts_nested_attributes_for :list_items, reject_if: :reject_blank_list_item
 
   before_validation :generate_token, on: :create
 
@@ -37,5 +37,9 @@ class List < ApplicationRecord
     return if list_items.count(&:is_featured?) <= 1
 
     errors.add(:list_items, "イチ推しは1件まで登録できます")
+  end
+
+  def reject_blank_list_item(attributes)
+    attributes["space_number"].blank? && attributes["source_url"].blank?
   end
 end

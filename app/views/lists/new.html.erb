@@ -57,46 +57,11 @@
         </div>
 
         <div class="space-y-4">
-          <% 20.times do |index| %>
+          <% 5.times do |index| %>
             <% item = @list.list_items[index] || @list.list_items.build %>
             <div class="rounded-xl border border-base-300 bg-base-200/30 p-4">
-              <div class="mb-4 flex items-center justify-between gap-4">
-                <h3 class="font-semibold">巡回先 <%= index + 1 %></h3>
-                <span class="badge badge-ghost"><%= index + 1 %> / 20</span>
-              </div>
-
               <%= form.fields_for :list_items, item, child_index: index do |item_form| %>
-                <div class="grid gap-4 sm:grid-cols-2">
-                  <div>
-                    <%= item_form.label :space_number, "配置番号", class: "label" do %>
-                      <span class="label-text">配置番号 <span class="text-base-content/60">任意</span></span>
-                    <% end %>
-                    <%= item_form.text_field :space_number,
-                          placeholder: "例：東A-12b",
-                          class: "input input-bordered w-full" %>
-                  </div>
-
-                  <div>
-                    <%= item_form.label :source_url, "外部ポストURL", class: "label" do %>
-                      <span class="label-text">外部ポストURL <span class="text-base-content/60">任意</span></span>
-                    <% end %>
-                    <%= item_form.url_field :source_url,
-                          placeholder: "X・pixivなどのURL",
-                          class: "input input-bordered w-full" %>
-                  </div>
-                </div>
-
-                <div class="mt-4 flex flex-wrap gap-x-6 gap-y-3">
-                  <label class="label cursor-pointer justify-start gap-3">
-                    <%= item_form.check_box :is_featured, class: "checkbox checkbox-warning" %>
-                    <span class="label-text">👑 イチ推し</span>
-                  </label>
-
-                  <label class="label cursor-pointer justify-start gap-3">
-                    <%= item_form.check_box :is_adult_content, class: "checkbox checkbox-neutral" %>
-                    <span class="label-text">🔞 成人向け</span>
-                  </label>
-                </div>
+                <%= render "lists/list_item_fields", item_form: item_form, index: index %>
               <% end %>
             </div>
           <% end %>
