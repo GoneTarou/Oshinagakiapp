@@ -34,7 +34,7 @@ erDiagram
     LIST_ITEMS {
         bigint id PK
         bigint list_id FK
-        string space_number "配置番号"
+        string space_number "配置番号・NULL許可"
         string source_url "外部ポストURL"
         boolean is_featured "イチ推し"
         boolean is_adult_content "成人向け"
@@ -52,7 +52,8 @@ erDiagram
 - `lists.event_occurrence_id` はNULL許可
 - `event_occurrence_id` がある場合、`lists.event_id` と同じイベントに属する
 - `UNIQUE(event_id, number)` でイベント内の開催回重複を禁止する
-- `UNIQUE(list_id, space_number)` で同一リスト内の配置番号重複を禁止する
+- 入力済み配置番号の重複を禁止する
+- 配置番号未入力の巡回先は登録できる
 - 1リストにつき巡回先は最大20件
 - 1リストにつき `is_featured = true` は最大1件
 - 巡回先は登録順で表示する
@@ -62,4 +63,4 @@ erDiagram
 
 ## 集計
 
-「みんなが選んでいる配置」は、`event_occurrences` 単位で共有URLから閲覧可能なリストの `list_items.space_number` を集計する。
+「みんなが選んでいる配置」は、`event_occurrences` 単位で共有URLから閲覧可能なリストの `list_items.space_number` を集計する。配置番号未入力の巡回先は集計対象外とする。

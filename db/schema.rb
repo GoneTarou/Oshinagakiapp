@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_11_071100) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_12_090000) do
   create_table "event_occurrences", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "event_id", null: false
@@ -33,7 +33,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_11_071100) do
     t.boolean "is_featured", default: false, null: false
     t.integer "list_id", null: false
     t.string "source_url"
-    t.string "space_number", null: false
+    t.string "space_number"
     t.datetime "updated_at", null: false
     t.index ["list_id", "space_number"], name: "index_list_items_on_list_id_and_space_number", unique: true
     t.index ["list_id"], name: "index_list_items_on_list_id"
