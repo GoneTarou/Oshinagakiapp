@@ -10,7 +10,11 @@
     <% end %>
     <%= item_form.text_field :space_number,
           placeholder: "例：東A-12b",
-          class: "input input-bordered w-full" %>
+          class: "input input-bordered w-full#{" input-error" if item_form.object.errors[:space_number].any?}",
+          aria: { invalid: item_form.object.errors[:space_number].any? } %>
+    <% item_form.object.errors.where(:space_number).each do |error| %>
+      <p class="mt-2 text-sm text-error" role="alert"><%= error.full_message %></p>
+    <% end %>
   </div>
 
   <div>
