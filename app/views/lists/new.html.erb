@@ -1,0 +1,111 @@
+<% content_for :title, "巡回リストを作成" %>
+
+<div class="w-full max-w-3xl mx-auto py-8">
+  <div class="mb-8">
+    <p class="text-sm font-semibold text-secondary">即売会巡回リスト</p>
+    <h1 class="mt-2 text-3xl font-bold text-base-content">巡回リストを作成</h1>
+    <p class="mt-3 text-base text-base-content/70">
+      イベントと巡回先を登録して、共有用のリストを作成します。
+    </p>
+  </div>
+
+  <% if @list.errors.any? %>
+    <div class="alert alert-error mb-6" role="alert">
+      <div>
+        <h2 class="font-bold">入力内容を確認してください</h2>
+        <ul class="mt-2 list-disc pl-5">
+          <% @list.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <%= form_with model: @list, url: lists_path, class: "space-y-8" do |form| %>
+    <section class="card bg-base-100 shadow-sm">
+      <div class="card-body">
+        <h2 class="card-title">イベント</h2>
+
+        <div>
+          <%= form.label :event_id, "イベント", class: "label" do %>
+            <span class="label-text font-semibold">イベント <span class="text-error">必須</span></span>
+          <% end %>
+          <%= form.collection_select :event_id, @events, :id, :name,
+                { prompt: "イベントを選択してください" },
+                { class: "select select-bordered w-full", required: true } %>
+        </div>
+
+        <div>
+          <%= form.label :event_occurrence_id, "開催回", class: "label" do %>
+            <span class="label-text font-semibold">開催回</span>
+          <% end %>
+          <%= form.collection_select :event_occurrence_id, @events.flat_map(&:event_occurrences), :id,
+                ->(occurrence) { "#{occurrence.event.name} #{occurrence.number}" },
+                { prompt: "開催回を選択してください（その他は不要）" },
+                { class: "select select-bordered w-full" } %>
+          <p class="mt-2 text-sm text-base-content/60">「その他」を選択した場合、開催回は選択しません。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card bg-base-100 shadow-sm">
+      <div class="card-body">
+        <div>
+          <h2 class="card-title">巡回先</h2>
+          <p class="mt-2 text-sm text-base-content/70">最大20件まで登録できます。配置番号と外部ポストURLは任意です。</p>
+        </div>
+
+        <div class="space-y-4">
+          <% 20.times do |index| %>
+            <% item = @list.list_items[index] || @list.list_items.build %>
+            <div class="rounded-xl border border-base-300 bg-base-200/30 p-4">
+              <div class="mb-4 flex items-center justify-between gap-4">
+                <h3 class="font-semibold">巡回先 <%= index + 1 %></h3>
+                <span class="badge badge-ghost"><%= index + 1 %> / 20</span>
+              </div>
+
+              <%= form.fields_for :list_items, item, child_index: index do |item_form| %>
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <%= item_form.label :space_number, "配置番号", class: "label" do %>
+                      <span class="label-text">配置番号 <span class="text-base-content/60">任意</span></span>
+                    <% end %>
+                    <%= item_form.text_field :space_number,
+                          placeholder: "例：東A-12b",
+                          class: "input input-bordered w-full" %>
+                  </div>
+
+                  <div>
+                    <%= item_form.label :source_url, "外部ポストURL", class: "label" do %>
+                      <span class="label-text">外部ポストURL <span class="text-base-content/60">任意</span></span>
+                    <% end %>
+                    <%= item_form.url_field :source_url,
+                          placeholder: "X・pixivなどのURL",
+                          class: "input input-bordered w-full" %>
+                  </div>
+                </div>
+
+                <div class="mt-4 flex flex-wrap gap-x-6 gap-y-3">
+                  <label class="label cursor-pointer justify-start gap-3">
+                    <%= item_form.check_box :is_featured, class: "checkbox checkbox-warning" %>
+                    <span class="label-text">👑 イチ推し</span>
+                  </label>
+
+                  <label class="label cursor-pointer justify-start gap-3">
+                    <%= item_form.check_box :is_adult_content, class: "checkbox checkbox-neutral" %>
+                    <span class="label-text">🔞 成人向け</span>
+                  </label>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </section>
+
+    <div class="flex justify-end">
+      <%= form.submit "巡回リストを作成", class: "btn btn-primary min-h-12 px-6 text-base" %>
+    </div>
+  <% end %>
+</div>
