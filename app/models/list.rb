@@ -8,6 +8,7 @@ class List < ApplicationRecord
 
   validates :token, presence: true, uniqueness: true
   validate :event_occurrence_requirement
+  validate :has_at_least_one_item
   validate :has_at_most_twenty_items
   validate :has_at_most_one_featured_item
 
@@ -31,6 +32,10 @@ class List < ApplicationRecord
     return if list_items.size <= 20
 
     errors.add(:list_items, "は20件以内で登録してください")
+  end
+
+  def has_at_least_one_item
+    errors.add(:list_items, "を1件以上登録してください") if list_items.empty?
   end
 
   def has_at_most_one_featured_item
