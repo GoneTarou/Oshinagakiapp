@@ -1,0 +1,81 @@
+<% content_for :title, "巡回リスト" %>
+
+<% event_context = @list.event_occurrence ? "#{@list.event.name} #{@list.event_occurrence.number}" : @list.event.name %>
+<% share_url = list_url(token: @list.token) %>
+<% share_text = "#{event_context}の巡回リストを共有します" %>
+
+<div class="min-h-screen w-full -mx-5 bg-[#f5af58] px-5 py-8">
+  <div class="mx-auto w-full max-w-6xl">
+    <header class="mb-8">
+      <p class="text-sm font-semibold text-secondary">即売会巡回リスト</p>
+      <h1 class="mt-2 text-3xl font-bold text-base-content"><%= event_context %></h1>
+      <div class="mt-5 flex flex-wrap gap-3">
+        <%= link_to "Xで共有する",
+              "https://twitter.com/intent/tweet?url=#{ERB::Util.url_encode(share_url)}&text=#{ERB::Util.url_encode(share_text)}",
+              class: "btn btn-primary min-h-11",
+              target: "_blank",
+              rel: "noopener noreferrer" %>
+      </div>
+    </header>
+
+    <main>
+      <% if @list_items.empty? %>
+        <section class="card bg-base-100 shadow-sm">
+          <div class="card-body items-center py-12 text-center">
+            <h2 class="card-title">巡回先がありません</h2>
+            <p class="text-base-content/70">登録された巡回先を確認できません。</p>
+          </div>
+        </section>
+      <% else %>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <% @list_items.each do |item| %>
+            <% space_label = item.space_number.presence || "配置番号未設定" %>
+            <% card_content = capture do %>
+              <div class="card bg-base-100 shadow-sm">
+                <div class="card-body gap-4 p-4">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="badge badge-error badge-lg font-bold"><%= space_label %></span>
+                    <% if item.is_featured? %>
+                      <span class="badge badge-warning">👑 推し</span>
+                    <% end %>
+                    <% if item.is_adult_content? %>
+                      <span class="badge badge-neutral">🔞 成人向け</span>
+                    <% end %>
+                  </div>
+
+                  <% if item.source_url.present? %>
+                    <div class="card-actions">
+                      <%= link_to "外部ポストを開く",
+                            item.source_url,
+                            class: "btn btn-secondary btn-sm",
+                            target: "_blank",
+                            rel: "noopener noreferrer" %>
+                    </div>
+                  <% else %>
+                    <p class="text-sm text-base-content/60">外部ポストURLは登録されていません。</p>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+
+            <% if item.is_adult_content? %>
+              <details class="group">
+<summary class="flex min-h-32 cursor-pointer list-none items-center justify-center rounded-xl border border-base-content/20 bg-base-100 p-4 text-center shadow-sm transition hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary">                  <span>
+                    <span class="block font-semibold">🔞 成人向け</span>
+                    <span class="mt-2 block text-sm text-base-content/70">配置：<%= space_label %></span>
+                    <span class="btn btn-secondary btn-sm mt-4">成人向けコンテンツを表示</span>
+                  </span>
+                </summary>
+                <div class="mt-4">
+                  <%= card_content %>
+                </div>
+              </details>
+            <% else %>
+              <%= card_content %>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </main>
+  </div>
+</div>
