@@ -35,7 +35,7 @@ erDiagram
         bigint id PK
         bigint list_id FK
         string space_number "配置番号・NULL許可"
-        string source_url "外部ポストURL"
+        string source_url "許可された外部ポストURL"
         boolean is_featured "イチ推し"
         boolean is_adult_content "成人向け"
         datetime created_at

@@ -1,0 +1,161 @@
+import { Controller } from "@hotwired/stimulus"
+
+let twitterWidgetsPromise
+
+export default class extends Controller {
+  static values = {
+    url: String
+  }
+
+  static targets = ["content", "fallback", "error"]
+
+  connect() {
+    const url = this.parseUrl()
+
+    if (!url) {
+      this.showError("正しいURLを入力してください。")
+      return
+    }
+
+    if (!this.isAllowedUrl(url)) {
+      this.showError("許可されていない外部ポストURLです。")
+      return
+    }
+
+    if (this.isXUrl(url)) {
+      void this.loadXWidget(url)
+      return
+    }
+
+    this.showFallback()
+  }
+
+  parseUrl() {
+    try {
+      const url = new URL(this.urlValue)
+
+      if (!["http:", "https:"].includes(url.protocol)) {
+        return null
+      }
+
+      return url
+    } catch {
+      return null
+    }
+  }
+
+  isAllowedUrl(url) {
+    return ["x.com", "pixiv.net", "www.pixiv.net"].includes(url.hostname)
+  }
+
+  isXUrl(url) {
+    return url.hostname === "x.com"
+  }
+
+  async loadXWidget(url) {
+    const tweetId = this.extractTweetId(url)
+
+    if (!tweetId) {
+      this.showError("Xの投稿URLを指定してください。")
+      return
+    }
+
+    this.renderXPost(url)
+
+    try {
+      await this.loadTwitterWidgets()
+      window.twttr.widgets.load(this.contentTarget)
+    } catch {
+      this.showFallback()
+    }
+  }
+
+  extractTweetId(url) {
+    const match = url.pathname.match(/^\/[^/]+\/status\/(\d+)/)
+
+    return match ? match[1] : null
+  }
+
+  renderXPost(url) {
+    const blockquote = document.createElement("blockquote")
+    blockquote.className = "twitter-tweet"
+
+    const link = document.createElement("a")
+    link.href = url.href
+    link.textContent = url.href
+
+    blockquote.appendChild(link)
+    this.contentTarget.replaceChildren(blockquote)
+    this.contentTarget.hidden = false
+    this.fallbackTarget.hidden = true
+  }
+
+  loadTwitterWidgets() {
+    if (window.twttr?.widgets) {
+      return Promise.resolve()
+    }
+
+    if (twitterWidgetsPromise) {
+      return twitterWidgetsPromise
+    }
+
+    twitterWidgetsPromise = new Promise((resolve, reject) => {
+      const existingScript = document.querySelector(
+        'script[src="https://platform.twitter.com/widgets.js"]'
+      )
+      const script = existingScript || document.createElement("script")
+      let settled = false
+      let timeoutId
+
+      const resolveOnce = () => {
+        if (settled) return
+
+        settled = true
+        window.clearTimeout(timeoutId)
+
+        if (window.twttr?.widgets) {
+          resolve()
+        } else {
+          reject(new Error("Xウィジェットを利用できません"))
+        }
+      }
+
+      const rejectOnce = () => {
+        if (settled) return
+
+        settled = true
+        window.clearTimeout(timeoutId)
+        reject(new Error("Xウィジェットの読み込みに失敗しました"))
+      }
+
+      script.addEventListener("load", resolveOnce, { once: true })
+      script.addEventListener("error", rejectOnce, { once: true })
+
+      timeoutId = window.setTimeout(rejectOnce, 10000)
+
+      if (!existingScript) {
+        script.src = "https://platform.twitter.com/widgets.js"
+        script.async = true
+        document.head.appendChild(script)
+      }
+    }).catch((error) => {
+      twitterWidgetsPromise = null
+      throw error
+    })
+
+    return twitterWidgetsPromise
+  }
+
+  showFallback() {
+    this.contentTarget.hidden = true
+    this.fallbackTarget.hidden = false
+    this.errorTarget.hidden = true
+  }
+
+  showError(message) {
+    this.contentTarget.hidden = true
+    this.fallbackTarget.hidden = true
+    this.errorTarget.textContent = message
+    this.errorTarget.hidden = false
+  }
+}

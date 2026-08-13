@@ -32,12 +32,12 @@ class ListsController < ApplicationController
       list: [
         :event_id,
         :event_occurrence_id,
-        { list_items_attributes: [[
+        { list_items_attributes: [ [
           :space_number,
           :source_url,
           :is_featured,
           :is_adult_content
-        ]] }
+        ] ] }
       ]
     )
   end
