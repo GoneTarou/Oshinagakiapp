@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_12_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_13_100000) do
   create_table "event_occurrences", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "event_id", null: false
@@ -32,6 +32,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_12_090000) do
     t.boolean "is_adult_content", default: false, null: false
     t.boolean "is_featured", default: false, null: false
     t.integer "list_id", null: false
+    t.string "source_type"
     t.string "source_url"
     t.string "space_number"
     t.datetime "updated_at", null: false

@@ -49,7 +49,8 @@ COMITIA
 | 項目 | 内容 |
 | --- | --- |
 | 配置番号 | 任意。入力された場合は文字列で保存する |
-| 外部ポストURL | 任意。X・pixivなどを登録できる |
+| 外部ポスト種別 | 任意。`x` または `pixiv` |
+| 外部ポストURL | 任意。X・pixivの許可されたURLのみ登録できる |
 | イチ推し | 1リストにつき最大1件 |
 | 成人向け | 成人向けコンテンツかどうか |
 
@@ -59,6 +60,9 @@ COMITIA
 - 配置番号が未入力のカードは、配置番号未設定であることを表示する
 - 配置番号と外部ポストURLが両方未入力の場合、イチ推し・成人向けのチェック状態に関係なく保存しない
 - 配置番号または外部ポストURLのどちらか一方が入力されていれば保存する
+- Xは `x.com` のみ許可し、`twitter.com` は許可しない
+- pixivは `pixiv.net` と `www.pixiv.net` のみ許可する
+- 外部ポストURLは `http` または `https` のみ許可する
 - 表示順は登録順で固定する
 - 並び替え機能は作成しない
 - メモ、価格、予算、サークル名は扱わない
@@ -68,7 +72,7 @@ COMITIA
 - 外部コンテンツの画像・本文をアプリ側で保存・加工しない
 - X APIは使用しない
 - Xは公式 `widgets.js` で表示する
-- その他のサイトは、サイトごとの埋め込みまたは外部リンクで表示する
+- その他のサイトは登録できない
 - 外部ポストURLがない巡回先でも、配置番号カードとして表示できる
 
 ## 閲覧画面
@@ -133,7 +137,7 @@ events
 | `events` | `name` |
 | `event_occurrences` | `event_id`, `number` |
 | `lists` | `event_id`, `event_occurrence_id`, `token` |
-| `list_items` | `list_id`, `space_number`, `source_url`, `is_featured`, `is_adult_content` |
+| `list_items` | `list_id`, `space_number`, `source_type`, `source_url`, `is_featured`, `is_adult_content` |
 
 主な制約：
 
