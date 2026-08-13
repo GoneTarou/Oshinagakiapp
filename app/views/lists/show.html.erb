@@ -3,6 +3,7 @@
 <% event_context = @list.event_occurrence ? "#{@list.event.name} #{@list.event_occurrence.number}" : @list.event.name %>
 <% share_url = list_url(token: @list.token) %>
 <% share_text = "#{event_context}の巡回リストを共有します" %>
+<% x_share_url = "https://twitter.com/intent/tweet?url=#{ERB::Util.url_encode(share_url)}&text=#{ERB::Util.url_encode(share_text)}" %>
 
 <div class="min-h-screen w-full -mx-5 bg-[#f5af58] px-5 py-8">
   <div class="mx-auto w-full max-w-6xl">
@@ -11,7 +12,7 @@
       <h1 class="mt-2 text-3xl font-bold text-base-content"><%= event_context %></h1>
       <div class="mt-5 flex flex-wrap gap-3">
         <%= link_to "Xで共有する",
-              "https://twitter.com/intent/tweet?url=#{ERB::Util.url_encode(share_url)}&text=#{ERB::Util.url_encode(share_text)}",
+              x_share_url,
               class: "btn btn-primary min-h-11",
               target: "_blank",
               rel: "noopener noreferrer" %>
