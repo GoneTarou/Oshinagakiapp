@@ -87,6 +87,7 @@ export default class extends Controller {
     blockquote.appendChild(link)
     this.contentTarget.replaceChildren(blockquote)
     this.contentTarget.hidden = false
+    this.fallbackTarget.hidden = true
   }
 
   loadTwitterWidgets() {
