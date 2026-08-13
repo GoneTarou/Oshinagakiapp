@@ -16,11 +16,24 @@
       </div>
 
       <% if item.source_url.present? %>
-        <div class="card-actions">
-          <%= link_to "外部ポストを開く", item.source_url,
-                class: "btn btn-secondary btn-sm",
-                target: "_blank",
-                rel: "noopener noreferrer" %>
+        <div
+          data-controller="external-post"
+          data-external-post-url-value="<%= item.source_url %>">
+          <div data-external-post-target="content" hidden></div>
+
+          <div data-external-post-target="fallback" hidden>
+            <%= link_to "外部ポストを開く", item.source_url,
+                  class: "btn btn-secondary btn-sm",
+                  target: "_blank",
+                  rel: "noopener noreferrer" %>
+          </div>
+
+          <p
+            data-external-post-target="error"
+            class="text-sm text-error"
+            role="alert"
+            hidden>
+          </p>
         </div>
       <% else %>
         <p class="text-sm text-base-content/60">外部ポストURLは登録されていません。</p>
