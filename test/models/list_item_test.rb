@@ -12,7 +12,7 @@ class ListItemTest < ActiveSupport::TestCase
   end
 
   test "allows pixiv.net and www.pixiv.net URLs" do
-    ["https://pixiv.net/users/1", "https://www.pixiv.net/users/1"].each do |url|
+    [ "https://pixiv.net/users/1", "https://www.pixiv.net/users/1" ].each do |url|
       item = @list.list_items.build(source_url: url)
 
       assert item.valid?, url
