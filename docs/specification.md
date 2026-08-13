@@ -49,7 +49,6 @@ COMITIA
 | 項目 | 内容 |
 | --- | --- |
 | 配置番号 | 任意。入力された場合は文字列で保存する |
-| 外部ポスト種別 | 任意。`x` または `pixiv` |
 | 外部ポストURL | 任意。X・pixivの許可されたURLのみ登録できる |
 | イチ推し | 1リストにつき最大1件 |
 | 成人向け | 成人向けコンテンツかどうか |
@@ -60,6 +59,7 @@ COMITIA
 - 配置番号が未入力のカードは、配置番号未設定であることを表示する
 - 配置番号と外部ポストURLが両方未入力の場合、イチ推し・成人向けのチェック状態に関係なく保存しない
 - 配置番号または外部ポストURLのどちらか一方が入力されていれば保存する
+- 外部ポスト種別は保持せず、URLのホスト名から対応サイトを判定する
 - Xは `x.com` のみ許可し、`twitter.com` は許可しない
 - pixivは `pixiv.net` と `www.pixiv.net` のみ許可する
 - 外部ポストURLは `http` または `https` のみ許可する
@@ -137,7 +137,7 @@ events
 | `events` | `name` |
 | `event_occurrences` | `event_id`, `number` |
 | `lists` | `event_id`, `event_occurrence_id`, `token` |
-| `list_items` | `list_id`, `space_number`, `source_type`, `source_url`, `is_featured`, `is_adult_content` |
+| `list_items` | `list_id`, `space_number`, `source_url`, `is_featured`, `is_adult_content` |
 
 主な制約：
 

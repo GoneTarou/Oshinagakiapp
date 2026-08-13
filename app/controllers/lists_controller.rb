@@ -34,7 +34,6 @@ class ListsController < ApplicationController
         :event_occurrence_id,
         { list_items_attributes: [ [
           :space_number,
-          :source_type,
           :source_url,
           :is_featured,
           :is_adult_content
