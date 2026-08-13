@@ -18,12 +18,30 @@
   </div>
 
   <div>
+    <%= item_form.label :source_type, "外部ポスト種別", class: "label" do %>
+      <span class="label-text">外部ポスト種別 <span class="text-base-content/60">任意</span></span>
+    <% end %>
+    <%= item_form.select :source_type,
+          [["X", "x"], ["pixiv", "pixiv"]],
+          { include_blank: "サイトを選択してください" },
+          { class: "select select-bordered w-full#{" select-error" if item_form.object.errors[:source_type].any?}",
+            aria: { invalid: item_form.object.errors[:source_type].any? } } %>
+    <% item_form.object.errors.where(:source_type).each do |error| %>
+      <p class="mt-2 text-sm text-error" role="alert"><%= error.full_message %></p>
+    <% end %>
+  </div>
+
+  <div>
     <%= item_form.label :source_url, "外部ポストURL", class: "label" do %>
       <span class="label-text">外部ポストURL <span class="text-base-content/60">任意</span></span>
     <% end %>
     <%= item_form.url_field :source_url,
           placeholder: "X・pixivなどのURL",
-          class: "input input-bordered w-full" %>
+          class: "input input-bordered w-full#{" input-error" if item_form.object.errors[:source_url].any?}",
+          aria: { invalid: item_form.object.errors[:source_url].any? } %>
+    <% item_form.object.errors.where(:source_url).each do |error| %>
+      <p class="mt-2 text-sm text-error" role="alert"><%= error.full_message %></p>
+    <% end %>
   </div>
 </div>
 
