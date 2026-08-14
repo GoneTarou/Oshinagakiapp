@@ -133,7 +133,7 @@ font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sa
 - イチ推しの場合は `👑 推し` の `badge-warning` を併記する
 - 外部ポストURLがない場合でも、配置番号カードとして成立させる
 - 通常の閲覧画面では成人向けカードの内容を初期表示しない
-- 表示順は登録順とする
+- 表示順はイチ推しを先頭にし、その他は登録順とする
 
 ### リスト表示
 

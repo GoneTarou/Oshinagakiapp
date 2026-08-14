@@ -18,7 +18,7 @@ class ListsController < ApplicationController
 
   def show
     @list = List.includes(:event, :event_occurrence, :list_items).find_by!(token: params[:token])
-    @list_items = @list.list_items.order(:created_at, :id)
+    @list_items = @list.list_items.order(is_featured: :desc, created_at: :asc, id: :asc)
   end
 
   def ogp

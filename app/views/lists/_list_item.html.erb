@@ -1,10 +1,12 @@
-<% space_label = item.space_number.presence || "配置番号未設定" %>
+<% space_label = item.space_number.presence %>
 
 <% card_content = capture do %>
   <article class="card card-compact bg-base-100 shadow-sm">
     <div class="card-body gap-4 p-4">
       <div class="flex flex-wrap items-center gap-2">
-        <span class="badge badge-error badge-lg font-bold"><%= space_label %></span>
+        <% if space_label.present? %>
+          <span class="badge badge-error badge-lg font-bold"><%= space_label %></span>
+        <% end %>
 
         <% if item.is_featured? %>
           <span class="badge badge-warning">👑 イチ推し</span>
@@ -49,7 +51,9 @@
     <summary class="flex min-h-32 cursor-pointer list-none items-center justify-center rounded-xl border border-base-content/20 bg-base-100 p-4 text-center shadow-sm transition hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary group-open:hidden">
       <span>
         <span class="block font-semibold">🔞 成人向け</span>
-        <span class="mt-2 block text-sm text-base-content/70">配置：<%= space_label %></span>
+        <% if space_label.present? %>
+          <span class="mt-2 block text-sm text-base-content/70">配置：<%= space_label %></span>
+        <% end %>
         <span class="btn btn-secondary btn-sm mt-4">成人向けコンテンツを表示</span>
       </span>
     </summary>
