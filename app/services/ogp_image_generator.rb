@@ -14,16 +14,25 @@ class OgpImageGenerator
     image.resize("#{WIDTH}x#{HEIGHT}^")
     image.gravity("center")
     image.crop("#{WIDTH}x#{HEIGHT}+0+0")
+    image.background("#ffffff")
+    image.alpha("remove")
+    image.alpha("off")
 
     image.combine_options do |command|
       command.font(font_path)
       command.fill("#4a2b1a")
       command.gravity("center")
-      command.interline_spacing(8)
+      command.interline_spacing(6)
+      command.pointsize(30)
+      command.annotate("+0-170", app_title)
       command.pointsize(52)
-      command.annotate("+0-50", event_context)
-      command.pointsize(34)
-      command.annotate("+0+35", summary_text)
+      command.annotate("+0-85", event_context)
+      command.pointsize(30)
+      command.annotate("+0+5", app_title)
+      command.pointsize(40)
+      command.annotate("+0+85", summary_text)
+      command.pointsize(32)
+      command.annotate("+0+155", featured_space_text) if featured_space_text.present?
     end
 
     image.format("png")
@@ -47,15 +56,33 @@ class OgpImageGenerator
   end
 
   def summary_text
-    summary = "巡回先 #{@list.list_items.size}件"
+    "巡回先 #{@list.list_items.size}件"
+  end
+
+  def app_title
+    "即売会巡回リスト"
+  end
+
+  def featured_space_text
+    space_number = featured_space_number || first_space_number
+    return if space_number.blank?
+
+    "イチ推し #{space_number}"
+  end
+
+  def featured_space_number
     featured_item = @list.list_items.find do |item|
       item.is_featured? && !item.is_adult_content? && item.space_number.present?
     end
 
-    if featured_item
-      summary += "　👑 イチ推し #{featured_item.space_number}"
+    featured_item&.space_number
+  end
+
+  def first_space_number
+    first_item = @list.list_items.find do |item|
+      !item.is_adult_content? && item.space_number.present?
     end
 
-    summary
+    first_item&.space_number
   end
 end
