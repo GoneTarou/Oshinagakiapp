@@ -46,7 +46,7 @@
           </div>
         </section>
       <% else %>
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="mx-auto flex w-full max-w-2xl flex-col gap-4">
           <% @list_items.each do |item| %>
             <%= render "lists/list_item", item: item %>
           <% end %>

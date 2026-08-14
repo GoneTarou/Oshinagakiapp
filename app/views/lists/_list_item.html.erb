@@ -19,9 +19,11 @@
         <div
           data-controller="external-post"
           data-external-post-url-value="<%= item.source_url %>">
-          <div data-external-post-target="content" hidden></div>
+          <div class="flex justify-center">
+            <div data-external-post-target="content" hidden></div>
+          </div>
 
-          <div data-external-post-target="fallback">
+          <div class="flex justify-center" data-external-post-target="fallback">
             <%= link_to (item.pixiv_source? ? "pixivで開く" : "外部ポストを開く"), item.source_url,
                   class: "btn btn-secondary btn-sm",
                   target: "_blank",
@@ -44,7 +46,7 @@
 
 <% if item.is_adult_content? %>
   <details class="group">
-    <summary class="flex min-h-32 cursor-pointer list-none items-center justify-center rounded-xl border border-base-content/20 bg-base-100 p-4 text-center shadow-sm transition hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary">
+    <summary class="flex min-h-32 cursor-pointer list-none items-center justify-center rounded-xl border border-base-content/20 bg-base-100 p-4 text-center shadow-sm transition hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary group-open:hidden">
       <span>
         <span class="block font-semibold">🔞 成人向け</span>
         <span class="mt-2 block text-sm text-base-content/70">配置：<%= space_label %></span>

@@ -79,6 +79,8 @@ export default class extends Controller {
   renderXPost(url) {
     const blockquote = document.createElement("blockquote")
     blockquote.className = "twitter-tweet"
+    blockquote.dataset.width = "550"
+    blockquote.dataset.align = "center"
 
     const link = document.createElement("a")
     link.href = url.href
