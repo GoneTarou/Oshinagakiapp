@@ -21,6 +21,18 @@ class ListsController < ApplicationController
     @list_items = @list.list_items.order(:created_at, :id)
   end
 
+  def ogp
+    list = List.includes(:event, :event_occurrence, :list_items).find_by!(token: params[:token])
+    image_data = OgpImageGenerator.new(list).call
+
+    send_data image_data,
+              type: "image/png",
+              disposition: "inline"
+  rescue MiniMagick::Error, Errno::ENOENT => e
+    Rails.logger.error("OGP generation failed (#{e.class}): #{e.message}")
+    head :not_found
+  end
+
   private
 
   def load_events
