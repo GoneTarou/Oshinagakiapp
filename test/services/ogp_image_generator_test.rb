@@ -3,8 +3,7 @@ require "test_helper"
 class OgpImageGeneratorTest < ActiveSupport::TestCase
   test "uses a compact event point size for long event context" do
     event = Event.new(name: "あ" * 16)
-    occurrence = EventOccurrence.new(event: event, number: 1)
-    list = List.new(event: event, event_occurrence: occurrence)
+    list = List.new(event: event)
 
     generator = OgpImageGenerator.new(list)
 
@@ -12,7 +11,7 @@ class OgpImageGeneratorTest < ActiveSupport::TestCase
   end
 
   test "uses the earliest registered general space number when no item is featured" do
-    list = List.new(event: events(:one), event_occurrence: event_occurrences(:one))
+    list = List.new(event: events(:one))
 
     list.list_items.build(
       space_number: "東A-12b",

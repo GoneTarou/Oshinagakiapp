@@ -17,12 +17,12 @@ class ListsController < ApplicationController
   end
 
   def show
-    @list = List.includes(:event, :event_occurrence, :list_items).find_by!(token: params[:token])
+    @list = List.includes(:event, :list_items).find_by!(token: params[:token])
     @list_items = @list.list_items.order(is_featured: :desc, created_at: :asc, id: :asc)
   end
 
   def ogp
-    list = List.includes(:event, :event_occurrence, :list_items).find_by!(token: params[:token])
+    list = List.includes(:event, :list_items).find_by!(token: params[:token])
     image_data = OgpImageGenerator.new(list).call
 
     send_data image_data,
@@ -53,14 +53,13 @@ class ListsController < ApplicationController
   private
 
   def load_events
-    @events = Event.includes(:event_occurrences).order(:id)
+    @events = Event.order(:id)
   end
 
   def list_params
     params.expect(
       list: [
         :event_id,
-        :event_occurrence_id,
         { list_items_attributes: [ [
           :space_number,
           :source_url,

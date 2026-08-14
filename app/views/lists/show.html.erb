@@ -1,4 +1,4 @@
-<% event_context = @list.event_occurrence ? "#{@list.event.name} #{@list.event_occurrence.number}" : @list.event.name %>
+<% event_context = @list.event.name %>
 <% content_for :title, event_context %>
 <% share_url = list_url(token: @list.token) %>
 <% share_text = "#{event_context}の巡回リストを共有します" %>
