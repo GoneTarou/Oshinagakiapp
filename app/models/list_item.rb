@@ -8,6 +8,14 @@ class ListItem < ApplicationRecord
   validates :space_number, uniqueness: { scope: :list_id, allow_nil: true }
   validate :source_url_is_allowed
 
+  def pixiv_source?
+    uri = URI.parse(source_url.to_s)
+
+    %w[pixiv.net www.pixiv.net].include?(uri.host&.downcase)
+  rescue URI::InvalidURIError
+    false
+  end
+
   private
 
   def normalize_attributes

@@ -22,7 +22,7 @@
           <div data-external-post-target="content" hidden></div>
 
           <div data-external-post-target="fallback">
-            <%= link_to "外部ポストを開く", item.source_url,
+            <%= link_to (item.pixiv_source? ? "pixivで開く" : "外部ポストを開く"), item.source_url,
                   class: "btn btn-secondary btn-sm",
                   target: "_blank",
                   rel: "noopener noreferrer" %>
