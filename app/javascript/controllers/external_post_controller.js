@@ -4,10 +4,12 @@ let twitterWidgetsPromise
 
 export default class extends Controller {
   static values = {
-    url: String
+    url: String,
+    pixivTitleUrl: String,
+    adult: Boolean
   }
 
-  static targets = ["content", "fallback", "error"]
+  static targets = ["content", "fallback", "error", "title"]
 
   connect() {
     const url = this.parseUrl()
@@ -27,7 +29,16 @@ export default class extends Controller {
       return
     }
 
+    if (this.isPixivUrl(url)) {
+      this.setupPixivTitleLoading()
+      return
+    }
+
     this.showFallback()
+  }
+
+  disconnect() {
+    this.detailsElement?.removeEventListener("toggle", this.detailsToggleHandler)
   }
 
   parseUrl() {
@@ -50,6 +61,67 @@ export default class extends Controller {
 
   isXUrl(url) {
     return url.hostname === "x.com"
+  }
+
+  isPixivUrl(url) {
+    return ["pixiv.net", "www.pixiv.net"].includes(url.hostname)
+  }
+
+  setupPixivTitleLoading() {
+    if (!this.adultValue) {
+      void this.loadPixivTitle()
+      return
+    }
+
+    this.detailsElement = this.element.closest("details")
+
+    if (!this.detailsElement) return
+
+    this.detailsToggleHandler = () => {
+      if (this.detailsElement.open) {
+        void this.loadPixivTitle()
+      }
+    }
+
+    this.detailsElement.addEventListener("toggle", this.detailsToggleHandler)
+
+    if (this.detailsElement.open) {
+      void this.loadPixivTitle()
+    }
+  }
+
+  async loadPixivTitle() {
+    if (this.pixivTitleLoading || this.pixivTitleLoaded) return
+
+    this.pixivTitleLoading = true
+
+    try {
+      const response = await fetch(this.pixivTitleUrlValue, {
+        headers: {
+          Accept: "application/json"
+        }
+      })
+
+      if (!response.ok) {
+        throw new Error("Pixivタイトルの取得に失敗しました")
+      }
+
+      const data = await response.json()
+
+      this.titleTarget.textContent = data.title
+      this.titleTarget.hidden = false
+      this.pixivTitleLoaded = true
+    } catch {
+      this.showPixivTitleError()
+    } finally {
+      this.pixivTitleLoading = false
+    }
+  }
+
+  showPixivTitleError() {
+    this.errorTarget.textContent = "Pixivタイトルを取得できませんでした。"
+    this.errorTarget.hidden = false
+    this.fallbackTarget.hidden = false
   }
 
   async loadXWidget(url) {

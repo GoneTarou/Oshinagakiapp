@@ -3,6 +3,9 @@ require "mini_magick"
 class OgpImageGenerator
   WIDTH = 1200
   HEIGHT = 630
+  EVENT_CONTEXT_DEFAULT_POINTSIZE = 52
+  EVENT_CONTEXT_COMPACT_POINTSIZE = 40
+  EVENT_CONTEXT_COMPACT_THRESHOLD = 15
 
   def initialize(list)
     @list = list
@@ -25,7 +28,7 @@ class OgpImageGenerator
       command.interline_spacing(6)
       command.pointsize(30)
       command.annotate("+0-170", app_title)
-      command.pointsize(52)
+      command.pointsize(event_context_pointsize)
       command.annotate("+0-85", event_context)
       command.pointsize(30)
       command.annotate("+0+5", app_title)
@@ -55,6 +58,14 @@ class OgpImageGenerator
     "#{@list.event.name} #{@list.event_occurrence.number}"
   end
 
+  def event_context_pointsize
+    if event_context.length > EVENT_CONTEXT_COMPACT_THRESHOLD
+      EVENT_CONTEXT_COMPACT_POINTSIZE
+    else
+      EVENT_CONTEXT_DEFAULT_POINTSIZE
+    end
+  end
+
   def summary_text
     "巡回先 #{@list.list_items.size}件"
   end
@@ -71,7 +82,7 @@ class OgpImageGenerator
   end
 
   def featured_space_number
-    featured_item = @list.list_items.find do |item|
+    featured_item = ordered_list_items.find do |item|
       item.is_featured? && !item.is_adult_content? && item.space_number.present?
     end
 
@@ -79,10 +90,16 @@ class OgpImageGenerator
   end
 
   def first_space_number
-    first_item = @list.list_items.find do |item|
+    first_item = ordered_list_items.find do |item|
       !item.is_adult_content? && item.space_number.present?
     end
 
     first_item&.space_number
+  end
+
+  def ordered_list_items
+    @ordered_list_items ||= @list.list_items.sort_by do |item|
+      [ item.created_at&.to_f || 0, item.id || 0 ]
+    end
   end
 end

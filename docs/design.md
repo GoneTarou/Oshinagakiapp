@@ -132,6 +132,7 @@ font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sa
 - カード上部に配置番号の `badge-error` を置く
 - イチ推しの場合は `👑 推し` の `badge-warning` を併記する
 - 外部ポストURLがない場合でも、配置番号カードとして成立させる
+- 配置番号が未入力の場合は、配置番号の表示を省略する
 - 通常の閲覧画面では成人向けカードの内容を初期表示しない
 - 表示順はイチ推しを先頭にし、その他は登録順とする
 

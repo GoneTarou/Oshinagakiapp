@@ -33,6 +33,23 @@ class ListsController < ApplicationController
     head :not_found
   end
 
+  def pixiv_title
+    list = List.find_by!(token: params[:token])
+    item = list.list_items.find(params[:id])
+
+    unless item.pixiv_source?
+      render json: { error: "Pixiv URLではありません" }, status: :unprocessable_entity
+      return
+    end
+
+    title = PixivTitleFetcher.new(item.source_url).call
+
+    render json: { title: title }
+  rescue PixivTitleFetcher::Error => e
+    Rails.logger.info("Pixiv title fetch failed: #{e.message}")
+    render json: { error: "Pixivタイトルを取得できませんでした" }, status: :unprocessable_entity
+  end
+
   private
 
   def load_events

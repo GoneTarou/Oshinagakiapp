@@ -20,7 +20,15 @@
       <% if item.source_url.present? %>
         <div
           data-controller="external-post"
-          data-external-post-url-value="<%= item.source_url %>">
+          data-external-post-url-value="<%= item.source_url %>"
+          data-external-post-pixiv-title-url-value="<%= list_item_pixiv_title_path(item.list.token, item.id) %>"
+          data-external-post-adult-value="<%= item.is_adult_content? %>">
+          <p
+            data-external-post-target="title"
+            class="mb-3 text-center font-semibold"
+            hidden>
+          </p>
+
           <div class="flex justify-center">
             <div data-external-post-target="content" hidden></div>
           </div>

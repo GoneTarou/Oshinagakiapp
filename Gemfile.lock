@@ -409,6 +409,7 @@ DEPENDENCIES
   jbuilder
   kamal
   mini_magick (~> 5.3)
+  nokogiri (~> 1.19)
   propshaft
   puma (>= 8.0.2)
   rails (~> 8.1.3)
