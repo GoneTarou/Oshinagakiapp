@@ -18,7 +18,36 @@ class ListsController < ApplicationController
 
   def show
     @list = List.includes(:event, :event_occurrence, :list_items).find_by!(token: params[:token])
-    @list_items = @list.list_items.order(:created_at, :id)
+    @list_items = @list.list_items.order(is_featured: :desc, created_at: :asc, id: :asc)
+  end
+
+  def ogp
+    list = List.includes(:event, :event_occurrence, :list_items).find_by!(token: params[:token])
+    image_data = OgpImageGenerator.new(list).call
+
+    send_data image_data,
+              type: "image/png",
+              disposition: "inline"
+  rescue MiniMagick::Error, Errno::ENOENT => e
+    Rails.logger.error("OGP generation failed (#{e.class}): #{e.message}")
+    head :not_found
+  end
+
+  def pixiv_title
+    list = List.find_by!(token: params[:token])
+    item = list.list_items.find(params[:id])
+
+    unless item.pixiv_source?
+      render json: { error: "Pixiv URLではありません" }, status: :unprocessable_entity
+      return
+    end
+
+    title = PixivTitleFetcher.new(item.source_url).call
+
+    render json: { title: title }
+  rescue PixivTitleFetcher::Error => e
+    Rails.logger.info("Pixiv title fetch failed: #{e.message}")
+    render json: { error: "Pixivタイトルを取得できませんでした" }, status: :unprocessable_entity
   end
 
   private
