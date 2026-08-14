@@ -10,16 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_13_110000) do
-  create_table "event_occurrences", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.integer "event_id", null: false
-    t.integer "number"
-    t.datetime "updated_at", null: false
-    t.index ["event_id", "number"], name: "index_event_occurrences_on_event_id_and_number", unique: true
-    t.index ["event_id"], name: "index_event_occurrences_on_event_id"
-  end
-
+ActiveRecord::Schema[8.1].define(version: 2026_08_14_000000) do
   create_table "events", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name"
@@ -42,16 +33,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_13_110000) do
   create_table "lists", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "event_id", null: false
-    t.integer "event_occurrence_id"
     t.string "token", null: false
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_lists_on_event_id"
-    t.index ["event_occurrence_id"], name: "index_lists_on_event_occurrence_id"
     t.index ["token"], name: "index_lists_on_token", unique: true
   end
 
-  add_foreign_key "event_occurrences", "events"
   add_foreign_key "list_items", "lists"
-  add_foreign_key "lists", "event_occurrences"
   add_foreign_key "lists", "events"
 end

@@ -2,7 +2,7 @@ require "test_helper"
 
 class ListItemTest < ActiveSupport::TestCase
   setup do
-    @list = List.new(event: events(:one), event_occurrence: event_occurrences(:one))
+    @list = List.new(event: events(:one))
   end
 
   test "allows an x.com URL" do

@@ -26,19 +26,6 @@
           <% end %>
         </div>
 
-        <div>
-          <%= form.label :event_occurrence_id, "開催回", class: "label" do %>
-            <span class="label-text font-semibold">開催回</span>
-          <% end %>
-          <%= form.collection_select :event_occurrence_id, @events.flat_map(&:event_occurrences), :id,
-                ->(occurrence) { "#{occurrence.event.name} #{occurrence.number}" },
-                { prompt: "開催回を選択してください（その他は不要）" },
-                { class: "select select-bordered w-full" } %>
-          <% @list.errors.where(:event_occurrence).each do |error| %>
-            <p class="mt-2 text-sm text-error" role="alert"><%= error.full_message %></p>
-          <% end %>
-          <p class="mt-2 text-sm text-base-content/60">「その他」を選択した場合、開催回は選択しません。</p>
-        </div>
       </div>
     </section>
 

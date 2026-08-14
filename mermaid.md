@@ -2,22 +2,12 @@
 
 ```mermaid
 erDiagram
-    EVENTS ||--o{ EVENT_OCCURRENCES : has
     EVENTS ||--o{ LISTS : has
-    EVENT_OCCURRENCES ||--o{ LISTS : has
     LISTS ||--|{ LIST_ITEMS : includes
 
     EVENTS {
         bigint id PK
-        string name "イベント名"
-        datetime created_at
-        datetime updated_at
-    }
-
-    EVENT_OCCURRENCES {
-        bigint id PK
-        bigint event_id FK
-        integer number "開催回"
+        string name "開催回を含むイベント名"
         datetime created_at
         datetime updated_at
     }
@@ -25,7 +15,6 @@ erDiagram
     LISTS {
         bigint id PK
         bigint event_id FK
-        bigint event_occurrence_id FK
         string token UK "共有URL用トークン"
         datetime created_at
         datetime updated_at
@@ -46,12 +35,7 @@ erDiagram
 ## 制約
 
 - `lists.token` は一意かつ必須
-- `event_occurrences.event_id` は必須
-- `event_occurrences.number` は必須
 - `lists.event_id` は必須
-- `lists.event_occurrence_id` はNULL許可
-- `event_occurrence_id` がある場合、`lists.event_id` と同じイベントに属する
-- `UNIQUE(event_id, number)` でイベント内の開催回重複を禁止する
 - 入力済み配置番号の重複を禁止する
 - 配置番号未入力の巡回先は登録できる
 - 1リストにつき巡回先は最大20件
@@ -63,4 +47,4 @@ erDiagram
 
 ## 集計
 
-「みんなが選んでいる配置」は、`event_occurrences` 単位で共有URLから閲覧可能なリストの `list_items.space_number` を集計する。配置番号未入力の巡回先は集計対象外とする。
+「みんなが選んでいる配置」は、`events` 単位で共有URLから閲覧可能なリストの `list_items.space_number` を集計する。配置番号未入力の巡回先は集計対象外とする。

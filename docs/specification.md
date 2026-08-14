@@ -12,27 +12,23 @@
 - `User`、`Session`、`Password`、OAuthは持たない
 - 作成後のリストは編集・削除できない
 
-## イベントと開催回
+## イベント
 
-イベントと開催回は運営側がDBに事前登録し、ユーザーは選択肢から選ぶ。
+イベントは開催回を含む名称で運営側がDBに事前登録し、ユーザーは選択肢から選ぶ。
 
 ```text
-コミックマーケット
-  - 106
-  - 107
-COMITIA
-  - 150
+コミックマーケットC108
+コミックマーケットC109
+COMITIA157
 その他
 ```
 
-- 開催回は整数で管理する
-- 通常イベントでは開催回の選択が必須
-- 「その他」は開催回を持たず、`event_occurrence_id` はNULLとする
-- ユーザーによるイベント名・開催回の自由入力は行わない
+- 開催回はイベント名に含めて管理する
+- ユーザーによるイベント名の自由入力は行わない
 
 ## リスト作成
 
-作成時にイベント・開催回と巡回先を登録する。リストタイトルは持たない。
+作成時にイベントと巡回先を登録する。リストタイトルは持たない。
 
 - 共有URLは `/lists/:token`
 - リスト一覧には公開しない
@@ -100,10 +96,10 @@ COMITIA
 
 ## 「みんなが選んでいる配置」ランキング
 
-同じイベント・開催回で、同じ配置番号が登録されたリスト数を集計する。配置番号未入力の巡回先は集計しない。
+同じイベントで、同じ配置番号が登録されたリスト数を集計する。配置番号未入力の巡回先は集計しない。
 
 ```text
-コミックマーケット106
+コミックマーケットC108
 東A-12b → 52件登録
 ```
 
@@ -122,7 +118,7 @@ COMITIA
 - MiniMagick、自作デザイン、テキスト描画を使用する
 - サークルや外部ポストの画像は使用しない
 - イベント名は20文字以内に制限する
-- イベント名・開催回、全体サマリー、イチ推しの配置番号を表示する
+- イベント名、全体サマリー、イチ推しの配置番号を表示する
 - OGP上のイベント表示が16文字以上の場合は、文字サイズを40pxに縮小する
 - イチ推しがない場合は、最初に登録された一般向け・配置番号入力済みの巡回先を表示する
 - 成人向け巡回先の情報は通常OGPに含めない
@@ -131,9 +127,6 @@ COMITIA
 
 ```text
 events
-  └── event_occurrences
-
-events
   └── lists
           └── list_items
 ```
@@ -141,15 +134,13 @@ events
 | テーブル | 主な項目 |
 | --- | --- |
 | `events` | `name` |
-| `event_occurrences` | `event_id`, `number` |
-| `lists` | `event_id`, `event_occurrence_id`, `token` |
+| `lists` | `event_id`, `token` |
 | `list_items` | `list_id`, `space_number`, `source_url`, `is_featured`, `is_adult_content` |
 
 主な制約：
 
 ```text
 UNIQUE(events.name)
-UNIQUE(event_occurrences.event_id, event_occurrences.number)
 UNIQUE(lists.token)
 UNIQUE(list_items.list_id, list_items.space_number) ※配置番号が入力された場合
 ```

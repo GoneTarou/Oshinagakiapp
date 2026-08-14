@@ -53,9 +53,7 @@ class OgpImageGenerator
   end
 
   def event_context
-    return @list.event.name if @list.event_occurrence.blank?
-
-    "#{@list.event.name} #{@list.event_occurrence.number}"
+    @list.event.name
   end
 
   def event_context_pointsize
