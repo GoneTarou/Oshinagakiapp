@@ -1,7 +1,23 @@
-<h1 class="text-6xl font-bold text-red-500">
-  Tailwind OK
-</h1>
+<% content_for :title, "即売会巡回リスト" %>
 
-<button class="btn btn-primary">
-  DaisyUI Test
-</button>
+<div class="min-h-screen w-full bg-[#f5af58] px-5 py-8">
+  <div class="mx-auto flex min-h-[80vh] w-full max-w-2xl items-center justify-center">
+    <section class="card card-compact w-full max-w-md bg-base-100 shadow-sm">
+      <div class="card-body items-center text-center">
+        <p class="text-sm font-semibold text-secondary">即売会巡回リスト</p>
+
+        <h1 class="card-title mt-2 text-3xl">
+          巡回リストを作成
+        </h1>
+
+        <p class="mt-3 text-base-content/70">
+          即売会で巡回したいサークルを登録して、共有用のリストを作成できます。
+        </p>
+
+        <%= link_to "巡回リストを作成",
+              new_list_path,
+              class: "btn btn-primary mt-6 min-h-12 px-6 text-base" %>
+      </div>
+    </section>
+  </div>
+</div>
