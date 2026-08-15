@@ -27,11 +27,15 @@ class OgpImageGenerator
       command.gravity("center")
       command.interline_spacing(6)
       command.pointsize(30)
+      command.font(app_title_font_path)
       command.annotate("+0-170", app_title)
+      command.font(font_path)
       command.pointsize(event_context_pointsize)
       command.annotate("+0-85", event_context)
+      command.font(app_title_font_path)
       command.pointsize(30)
       command.annotate("+0+5", app_title)
+      command.font(font_path)
       command.pointsize(40)
       command.annotate("+0+85", summary_text)
       command.pointsize(32)
@@ -50,6 +54,10 @@ class OgpImageGenerator
 
   def font_path
     Rails.root.join("app/assets/fonts/NotoSansJP-VariableFont_wght.ttf")
+  end
+
+  def app_title_font_path
+    Rails.root.join("app/assets/fonts/nicomoji-plus_v2-5.ttf")
   end
 
   def event_context
