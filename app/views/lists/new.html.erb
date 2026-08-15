@@ -34,7 +34,10 @@
       <div class="card-body">
         <div>
           <h2 class="card-title">巡回先</h2>
-          <p class="mt-2 text-sm text-base-content/70">最大20件まで登録できます。配置番号と外部ポストURLは任意です。</p>
+          <p class="mt-2 text-sm text-base-content/70">
+            作者名またはサークル情報と外部ポストURLは任意です。<br>
+            どちらか一方の入力が必要です。最大20件まで登録できます。
+          </p>
           <% @list.errors.where(:list_items).each do |error| %>
             <p class="mt-2 text-sm text-error" role="alert"><%= error.full_message %></p>
           <% end %>

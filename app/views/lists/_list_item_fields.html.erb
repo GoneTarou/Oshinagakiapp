@@ -5,11 +5,11 @@
 
 <div class="grid gap-4 sm:grid-cols-2">
   <div>
-    <%= item_form.label :space_number, "配置番号", class: "label" do %>
-      <span class="label-text">配置番号 <span class="text-base-content/60">任意</span></span>
+    <%= item_form.label :space_number, "作者名またはサークル情報", class: "label" do %>
+      <span class="label-text">作者名またはサークル情報 <span class="text-base-content/60">(任意)</span></span>
     <% end %>
     <%= item_form.text_field :space_number,
-          placeholder: "例：東A-12b",
+          placeholder: "例：サークル名、作者名、東A-12b",
           class: "input input-bordered w-full#{" input-error" if item_form.object.errors[:space_number].any?}",
           aria: { invalid: item_form.object.errors[:space_number].any? } %>
     <% item_form.object.errors.where(:space_number).each do |error| %>
@@ -19,7 +19,7 @@
 
   <div>
     <%= item_form.label :source_url, "外部ポストURL（X・pixiv）", class: "label" do %>
-      <span class="label-text">外部ポストURL（X・pixiv） <span class="text-base-content/60">任意</span></span>
+      <span class="label-text">外部ポストURL（X・pixiv） <span class="text-base-content/60">(任意)</span></span>
     <% end %>
     <%= item_form.url_field :source_url,
           placeholder: "X・pixivなどのURL",
