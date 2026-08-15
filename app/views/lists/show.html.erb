@@ -1,7 +1,7 @@
 <% event_context = @list.event.name %>
 <% content_for :title, "#{event_context} / 即売会しおり" %>
 <% share_url = list_url(token: @list.token) %>
-<% share_text = "#{event_context}の巡回リストを共有します" %>
+<% share_text = "#{event_context}の巡回リストを共有します #即売会しおり" %>
 <% x_share_url = "https://twitter.com/intent/tweet?url=#{ERB::Util.url_encode(share_url)}&text=#{ERB::Util.url_encode(share_text)}" %>
 <% ogp_image_url = list_ogp_url(token: @list.token) %>
 <% ogp_description = "#{event_context}の巡回リスト" %>
@@ -31,7 +31,7 @@
       <div class="mt-5 flex flex-wrap gap-3">
         <%= link_to "Xで共有する",
               x_share_url,
-              class: "inline-flex min-h-12 items-center justify-center rounded-full border-2 border-white px-7 text-base font-bold text-white transition hover:bg-white hover:text-[#f5af58] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
+              class: "inline-flex min-h-12 items-center justify-center rounded-full border-2 border-white bg-white px-7 text-base font-bold text-[#f5af58] transition hover:bg-white/90 hover:text-[#f5af58] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
               target: "_blank",
               rel: "noopener noreferrer" %>
       </div>

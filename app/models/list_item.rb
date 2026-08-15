@@ -32,8 +32,14 @@ class ListItem < ApplicationRecord
       errors.add(:source_url, "はhttpまたはhttpsのURLを入力してください")
     elsif !ALLOWED_SOURCE_HOSTS.include?(uri.host&.downcase)
       errors.add(:source_url, "はXまたはpixivのURLを入力してください")
+    elsif uri.host&.downcase == "x.com" && !x_post_url?(uri)
+      errors.add(:source_url, "はXの投稿URLを入力してください")
     end
   rescue URI::InvalidURIError
     errors.add(:source_url, "は正しいURLを入力してください")
+  end
+
+  def x_post_url?(uri)
+    uri.path.match?(%r{\A/[^/]+/status/\d+/?\z})
   end
 end

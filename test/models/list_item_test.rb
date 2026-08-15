@@ -11,6 +11,13 @@ class ListItemTest < ActiveSupport::TestCase
     assert item.valid?
   end
 
+  test "rejects an x.com URL that is not a post" do
+    item = @list.list_items.build(source_url: "https://x.com/example")
+
+    assert_not item.valid?
+    assert_includes item.errors[:source_url], "はXの投稿URLを入力してください"
+  end
+
   test "allows pixiv.net and www.pixiv.net URLs" do
     [ "https://pixiv.net/users/1", "https://www.pixiv.net/users/1" ].each do |url|
       item = @list.list_items.build(source_url: url)
