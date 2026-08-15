@@ -49,11 +49,11 @@ class OgpImageGenerator
   private
 
   def background_path
-    Rails.root.join("app/assets/images/okumono.png")
+    Rails.root.join("app/assets/images/pop2.png")
   end
 
   def font_path
-    Rails.root.join("app/assets/fonts/NotoSansJP-VariableFont_wght.ttf")
+    Rails.root.join("app/assets/fonts/nicomoji-plus_v2-5.ttf")
   end
 
   def app_title_font_path
