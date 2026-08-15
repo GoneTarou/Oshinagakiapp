@@ -10,7 +10,10 @@
       </p>
     </header>
 
-  <%= form_with model: @list, url: lists_path, class: "space-y-8" do |form| %>
+  <%= form_with model: @list,
+        url: lists_path,
+        class: "space-y-8",
+        data: { controller: "featured-items" } do |form| %>
     <section class="card card-compact bg-base-100 text-base-content shadow-sm">
       <div class="card-body">
         <h2 class="card-title">イベント</h2>
@@ -36,7 +39,7 @@
           <h2 class="card-title">巡回先</h2>
           <p class="mt-2 text-sm text-base-content/70">
             作者名またはサークル情報と外部ポストURLは任意です。<br>
-            どちらか一方の入力が必要です。最大20件まで登録できます。
+            どちらか一方の入力が必要です。最大20件まで登録できます。<br>
           </p>
           <% @list.errors.where(:list_items).each do |error| %>
             <p class="mt-2 text-sm text-error" role="alert"><%= error.full_message %></p>

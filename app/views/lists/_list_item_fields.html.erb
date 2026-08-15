@@ -9,7 +9,7 @@
       <span class="label-text">作者名またはサークル情報 <span class="text-base-content/60">(任意)</span></span>
     <% end %>
     <%= item_form.text_field :space_number,
-          placeholder: "例：サークル名、作者名、東A-12b",
+          placeholder: "例：作者名(サークル名、東A-12b)",
           class: "input input-bordered w-full#{" input-error" if item_form.object.errors[:space_number].any?}",
           aria: { invalid: item_form.object.errors[:space_number].any? } %>
     <% item_form.object.errors.where(:space_number).each do |error| %>
@@ -22,7 +22,7 @@
       <span class="label-text">外部ポストURL（X・pixiv） <span class="text-base-content/60">(任意)</span></span>
     <% end %>
     <%= item_form.url_field :source_url,
-          placeholder: "X・pixivなどのURL",
+          placeholder: "XもしくはpixivのURLのみ入力できます",
           class: "input input-bordered w-full#{" input-error" if item_form.object.errors[:source_url].any?}",
           aria: { invalid: item_form.object.errors[:source_url].any? } %>
     <% item_form.object.errors.where(:source_url).each do |error| %>
@@ -33,7 +33,12 @@
 
 <div class="mt-4 flex flex-wrap gap-x-6 gap-y-3">
   <label class="label cursor-pointer justify-start gap-3">
-    <%= item_form.check_box :is_featured, class: "checkbox checkbox-warning" %>
+    <%= item_form.check_box :is_featured,
+          class: "checkbox checkbox-warning",
+          data: {
+            featured_items_target: "checkbox",
+            action: "change->featured-items#select"
+          } %>
     <span class="label-text">👑 イチ推し</span>
   </label>
 
