@@ -1,15 +1,18 @@
 <div class="mb-4 flex items-center justify-between gap-4">
-  <h3 class="font-semibold">巡回先 <%= index + 1 %></h3>
+  <h3 class="flex items-center gap-2 text-lg font-bold">
+    <span class="badge border-[#f5af58] bg-[#f5af58] font-bold text-white"><%= index + 1 %></span>
+    <span>巡回先</span>
+  </h3>
   <span class="badge badge-ghost"><%= index + 1 %> / 20</span>
 </div>
 
 <div class="grid gap-4 sm:grid-cols-2">
   <div>
-    <%= item_form.label :space_number, "配置番号", class: "label" do %>
-      <span class="label-text">配置番号 <span class="text-base-content/60">任意</span></span>
+    <%= item_form.label :space_number, "作者名またはサークル情報", class: "label" do %>
+      <span class="label-text">作者名またはサークル情報 <span class="text-base-content/60">(任意)</span></span>
     <% end %>
     <%= item_form.text_field :space_number,
-          placeholder: "例：東A-12b",
+          placeholder: "例：作者名(サークル名、東A-12b)",
           class: "input input-bordered w-full#{" input-error" if item_form.object.errors[:space_number].any?}",
           aria: { invalid: item_form.object.errors[:space_number].any? } %>
     <% item_form.object.errors.where(:space_number).each do |error| %>
@@ -19,10 +22,10 @@
 
   <div>
     <%= item_form.label :source_url, "外部ポストURL（X・pixiv）", class: "label" do %>
-      <span class="label-text">外部ポストURL（X・pixiv） <span class="text-base-content/60">任意</span></span>
+      <span class="label-text">外部ポストURL（X・pixiv） <span class="text-base-content/60">(任意)</span></span>
     <% end %>
     <%= item_form.url_field :source_url,
-          placeholder: "X・pixivなどのURL",
+          placeholder: "XもしくはpixivのURLのみ入力できます",
           class: "input input-bordered w-full#{" input-error" if item_form.object.errors[:source_url].any?}",
           aria: { invalid: item_form.object.errors[:source_url].any? } %>
     <% item_form.object.errors.where(:source_url).each do |error| %>
@@ -33,7 +36,12 @@
 
 <div class="mt-4 flex flex-wrap gap-x-6 gap-y-3">
   <label class="label cursor-pointer justify-start gap-3">
-    <%= item_form.check_box :is_featured, class: "checkbox checkbox-warning" %>
+    <%= item_form.check_box :is_featured,
+          class: "checkbox checkbox-warning",
+          data: {
+            featured_items_target: "checkbox",
+            action: "change->featured-items#select"
+          } %>
     <span class="label-text">👑 イチ推し</span>
   </label>
 

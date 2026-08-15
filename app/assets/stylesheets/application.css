@@ -8,3 +8,13 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+@font-face {
+  font-family: "NicoMoj i Plus";
+  src: url("nicomoji-plus_v2-5.ttf") format("truetype");
+  font-display: swap;
+}
+
+.app-name {
+  font-family: "NicoMoj i Plus", sans-serif;
+}

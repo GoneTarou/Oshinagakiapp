@@ -1,7 +1,7 @@
 <% space_label = item.space_number.presence %>
 
 <% card_content = capture do %>
-  <article class="card card-compact bg-base-100 shadow-sm">
+  <article class="card card-compact bg-base-100 text-base-content shadow-sm">
     <div class="card-body gap-4 p-4">
       <div class="flex flex-wrap items-center gap-2">
         <% if space_label.present? %>
@@ -56,7 +56,7 @@
 
 <% if item.is_adult_content? %>
   <details class="group">
-    <summary class="flex min-h-32 cursor-pointer list-none items-center justify-center rounded-xl border border-base-content/20 bg-base-100 p-4 text-center shadow-sm transition hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary group-open:hidden">
+    <summary class="flex min-h-32 cursor-pointer list-none items-center justify-center rounded-xl border border-base-content/20 bg-base-100 p-4 text-center text-base-content shadow-sm transition hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary group-open:hidden">
       <span>
         <span class="block font-semibold">🔞 成人向け</span>
         <% if space_label.present? %>

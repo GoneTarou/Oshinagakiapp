@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Temp" %></title>
+    <title><%= content_for(:title) || "即売会しおり" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Temp">
+    <meta name="application-name" content="即売会しおり">
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -23,9 +23,44 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <main class="min-h-screen">
-      <%= yield %>
-    </main>
+  <body class="bg-[#f5af58]">
+    <aside
+      class="fixed inset-y-0 left-0 z-40 hidden w-64 border-r border-base-300 bg-white px-5 py-8 text-base-content shadow-sm lg:flex lg:flex-col xl:w-72"
+    >
+      <%= render "layouts/sidebar" %>
+    </aside>
+
+    <div class="min-h-screen lg:pl-64 xl:pl-72">
+      <header class="border-b border-white/30 bg-[#f5af58] px-5 py-4 lg:hidden">
+        <div class="flex items-center justify-between">
+          <%= link_to root_path, class: "app-name text-2xl text-white" do %>
+            即売会しおり
+          <% end %>
+
+          <details class="relative">
+            <summary class="cursor-pointer list-none rounded-full border-2 border-white px-4 py-2 font-bold text-white">
+              メニュー
+            </summary>
+
+            <div class="absolute right-0 z-50 mt-2 w-56 rounded-xl bg-white p-4 text-base-content shadow-lg">
+              <%= render "layouts/navigation_links" %>
+            </div>
+          </details>
+        </div>
+      </header>
+
+      <main class="min-h-screen">
+        <%= yield %>
+      </main>
+
+      <footer class="border-t border-white/30 bg-[#f5af58] px-5 py-6 text-center text-white">
+        <p class="text-sm">© 2026 即売会しおり</p>
+        <%= link_to "開発者のX",
+              "https://x.com/fiveyearseepy",
+              target: "_blank",
+              rel: "noopener noreferrer",
+              class: "mt-2 inline-block text-sm underline underline-offset-4 hover:text-white/80" %>
+      </footer>
+    </div>
   </body>
 </html>

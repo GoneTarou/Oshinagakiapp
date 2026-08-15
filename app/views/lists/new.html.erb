@@ -1,18 +1,30 @@
-<% content_for :title, "巡回リストを作成" %>
+<% content_for :title, "巡回リストを作成 / 即売会しおり" %>
 
-<div class="w-full max-w-3xl mx-auto px-5 py-8">
-  <div class="mb-8">
-    <p class="text-sm font-semibold text-secondary">即売会巡回リスト</p>
-    <h1 class="mt-2 text-3xl font-bold text-base-content">巡回リストを作成</h1>
-    <p class="mt-3 text-base text-base-content/70">
-      イベントと巡回先を登録して、共有用のリストを作成します。
-    </p>
-  </div>
+<div class="min-h-screen w-full bg-[#f5af58] px-5 py-10 text-white">
+  <div class="mx-auto w-full max-w-3xl">
+    <header class="mb-8 text-center">
+      <p class="app-name text-4xl font-normal tracking-[0.08em] text-white sm:text-5xl">即売会しおり</p>
+      <h1 class="mt-6 text-3xl font-bold text-white">巡回リストを作成</h1>
+      <p class="mt-3 text-base text-white">
+        イベントと巡回先を登録して、共有用のリストを作成します。
+      </p>
+    </header>
 
-  <%= form_with model: @list, url: lists_path, class: "space-y-8" do |form| %>
-    <section class="card card-compact bg-base-100 shadow-sm">
+  <%= form_with model: @list,
+        url: lists_path,
+        class: "space-y-8",
+        data: { controller: "featured-items" } do |form| %>
+    <section class="card card-compact overflow-hidden bg-base-100 text-base-content shadow-sm">
+      <div class="bg-white px-6 py-4 text-[#f5af58]">
+        <h2 class="text-xl font-bold">1. イベント</h2>
+      </div>
+
       <div class="card-body">
-        <h2 class="card-title">イベント</h2>
+        <p class="mb-4 rounded-md bg-base-200/60 px-4 py-3 text-base font-bold text-base-content">
+          ・イベントを選択してください。<br>
+          ・次に巡回先を入力してください。<br>
+          ・イチ推しは１件のみ登録できます。
+        </p>
 
         <div>
           <%= form.label :event_id, "イベント", class: "label" do %>
@@ -29,31 +41,58 @@
       </div>
     </section>
 
-    <section class="card card-compact bg-base-100 shadow-sm">
+    <section
+      class="card card-compact overflow-hidden bg-base-100 text-base-content shadow-sm"
+      data-controller="list-items"
+    >
+      <div class="bg-white px-6 py-4 text-[#f5af58]">
+        <h2 class="text-xl font-bold">2. 巡回先</h2>
+      </div>
+
       <div class="card-body">
         <div>
-          <h2 class="card-title">巡回先</h2>
-          <p class="mt-2 text-sm text-base-content/70">最大20件まで登録できます。配置番号と外部ポストURLは任意です。</p>
+          <p class="mt-2 text-sm text-base-content/70">
+            ・作者名またはサークル情報と外部ポストURLは任意です。<br>
+            ・どちらか一方の入力が必要です。最大20件まで登録できます。
+          </p>
           <% @list.errors.where(:list_items).each do |error| %>
             <p class="mt-2 text-sm text-error" role="alert"><%= error.full_message %></p>
+          <% end %>
+          <% @list.errors.where(:base).each do |error| %>
+            <p class="mt-2 text-sm text-error" role="alert"><%= error.message %></p>
           <% end %>
         </div>
 
         <div class="space-y-4">
           <% 20.times do |index| %>
             <% item = @list.list_items[index] || @list.list_items.build %>
-            <div class="rounded-xl border border-base-300 bg-base-200/30 p-4">
+
+            <div
+              class="rounded-xl border-2 border-base-300 bg-base-100 p-4 shadow-sm"
+              data-list-items-target="item"
+              <%= "hidden" if index >= 5 %>
+            >
               <%= form.fields_for :list_items, item, child_index: index do |item_form| %>
                 <%= render "lists/list_item_fields", item_form: item_form, index: index %>
               <% end %>
             </div>
           <% end %>
         </div>
+
+        <button
+          type="button"
+          class="mx-auto mt-2 inline-flex min-h-12 items-center justify-center rounded-full border-2 border-[#f5af58] bg-[#f5af58] px-6 font-bold text-white transition hover:bg-[#d98f3e] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
+          data-list-items-target="addButton"
+          data-action="click->list-items#add"
+        >
+          巡回先を追加する
+        </button>
       </div>
     </section>
 
-    <div class="flex justify-end">
-      <%= form.submit "巡回リストを作成", class: "btn btn-primary min-h-12 px-6 text-base" %>
+    <div class="flex justify-center">
+      <%= form.submit "巡回リストを作成", class: "min-h-16 rounded-full border-2 border-white bg-white px-10 text-lg font-bold text-[#f5af58] transition hover:bg-white/90 hover:text-[#f5af58] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" %>
     </div>
   <% end %>
+  </div>
 </div>
