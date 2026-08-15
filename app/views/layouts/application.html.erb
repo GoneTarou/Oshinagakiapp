@@ -23,9 +23,35 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <main class="min-h-screen">
-      <%= yield %>
-    </main>
+  <body class="bg-[#f5af58]">
+    <aside
+      class="fixed inset-y-0 left-0 z-40 hidden w-64 border-r border-base-300 bg-white px-5 py-8 text-base-content shadow-sm lg:flex lg:flex-col xl:w-72"
+    >
+      <%= render "layouts/sidebar" %>
+    </aside>
+
+    <div class="min-h-screen lg:pl-64 xl:pl-72">
+      <header class="border-b border-white/30 bg-[#f5af58] px-5 py-4 lg:hidden">
+        <div class="flex items-center justify-between">
+          <%= link_to root_path, class: "app-name text-2xl text-white" do %>
+            即売会しおり
+          <% end %>
+
+          <details class="relative">
+            <summary class="cursor-pointer list-none rounded-full border-2 border-white px-4 py-2 font-bold text-white">
+              メニュー
+            </summary>
+
+            <div class="absolute right-0 z-50 mt-2 w-56 rounded-xl bg-white p-4 text-base-content shadow-lg">
+              <%= render "layouts/navigation_links" %>
+            </div>
+          </details>
+        </div>
+      </header>
+
+      <main class="min-h-screen">
+        <%= yield %>
+      </main>
+    </div>
   </body>
 </html>
