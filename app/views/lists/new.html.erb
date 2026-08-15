@@ -33,7 +33,10 @@
       </div>
     </section>
 
-    <section class="card card-compact bg-base-100 text-base-content shadow-sm">
+    <section
+      class="card card-compact bg-base-100 text-base-content shadow-sm"
+      data-controller="list-items"
+    >
       <div class="card-body">
         <div>
           <h2 class="card-title">巡回先</h2>
@@ -53,13 +56,27 @@
         <div class="space-y-4">
           <% 20.times do |index| %>
             <% item = @list.list_items[index] || @list.list_items.build %>
-            <div class="rounded-xl border border-base-300 bg-base-200/30 p-4">
+
+            <div
+              class="rounded-xl border border-base-300 bg-base-200/30 p-4"
+              data-list-items-target="item"
+              <%= "hidden" if index >= 5 %>
+            >
               <%= form.fields_for :list_items, item, child_index: index do |item_form| %>
                 <%= render "lists/list_item_fields", item_form: item_form, index: index %>
               <% end %>
             </div>
           <% end %>
         </div>
+
+        <button
+          type="button"
+          class="mx-auto mt-2 inline-flex min-h-12 items-center justify-center rounded-full border-2 border-secondary px-6 font-bold text-secondary transition hover:bg-secondary hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
+          data-list-items-target="addButton"
+          data-action="click->list-items#add"
+        >
+          巡回先を追加する
+        </button>
       </div>
     </section>
 
