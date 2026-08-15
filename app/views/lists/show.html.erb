@@ -1,5 +1,5 @@
 <% event_context = @list.event.name %>
-<% content_for :title, event_context %>
+<% content_for :title, "#{event_context} / 即売会しおり" %>
 <% share_url = list_url(token: @list.token) %>
 <% share_text = "#{event_context}の巡回リストを共有します" %>
 <% x_share_url = "https://twitter.com/intent/tweet?url=#{ERB::Util.url_encode(share_url)}&text=#{ERB::Util.url_encode(share_text)}" %>
@@ -16,7 +16,7 @@
   <%= tag.meta property: "og:image:width", content: "1200" %>
   <%= tag.meta property: "og:image:height", content: "630" %>
   <%= tag.meta property: "og:image:alt", content: "#{event_context}の巡回リスト" %>
-  <%= tag.meta property: "og:site_name", content: "即売会巡回リスト" %>
+  <%= tag.meta property: "og:site_name", content: "即売会しおり" %>
   <%= tag.meta name: "twitter:card", content: "summary_large_image" %>
   <%= tag.meta name: "twitter:title", content: event_context %>
   <%= tag.meta name: "twitter:description", content: ogp_description %>
@@ -26,7 +26,7 @@
 <div class="min-h-screen w-full bg-[#f5af58] px-5 py-8">
   <div class="mx-auto w-full max-w-6xl">
     <header class="mb-8">
-      <p class="text-sm font-semibold text-secondary">即売会巡回リスト</p>
+      <p class="text-sm font-semibold text-secondary">即売会しおり</p>
       <h1 class="mt-2 text-3xl font-bold text-base-content"><%= event_context %></h1>
       <div class="mt-5 flex flex-wrap gap-3">
         <%= link_to "Xで共有する",

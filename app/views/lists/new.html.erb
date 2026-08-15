@@ -1,8 +1,8 @@
-<% content_for :title, "巡回リストを作成" %>
+<% content_for :title, "巡回リストを作成 / 即売会しおり" %>
 
 <div class="w-full max-w-3xl mx-auto px-5 py-8">
   <div class="mb-8">
-    <p class="text-sm font-semibold text-secondary">即売会巡回リスト</p>
+    <p class="text-sm font-semibold text-secondary">即売会しおり</p>
     <h1 class="mt-2 text-3xl font-bold text-base-content">巡回リストを作成</h1>
     <p class="mt-3 text-base text-base-content/70">
       イベントと巡回先を登録して、共有用のリストを作成します。
@@ -36,6 +36,9 @@
           <p class="mt-2 text-sm text-base-content/70">最大20件まで登録できます。配置番号と外部ポストURLは任意です。</p>
           <% @list.errors.where(:list_items).each do |error| %>
             <p class="mt-2 text-sm text-error" role="alert"><%= error.full_message %></p>
+          <% end %>
+          <% @list.errors.where(:base).each do |error| %>
+            <p class="mt-2 text-sm text-error" role="alert"><%= error.message %></p>
           <% end %>
         </div>
 

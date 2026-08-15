@@ -23,7 +23,7 @@ class List < ApplicationRecord
   end
 
   def has_at_least_one_item
-    errors.add(:list_items, "を1件以上登録してください") if list_items.empty?
+    errors.add(:base, "巡回先を1件以上登録してください") if list_items.empty?
   end
 
   def has_at_most_one_featured_item

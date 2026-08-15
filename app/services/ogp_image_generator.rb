@@ -69,7 +69,7 @@ class OgpImageGenerator
   end
 
   def app_title
-    "即売会巡回リスト"
+    "即売会しおり"
   end
 
   def featured_space_text
