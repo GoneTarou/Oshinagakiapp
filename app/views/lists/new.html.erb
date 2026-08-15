@@ -17,8 +17,9 @@
     <section class="card card-compact bg-base-100 text-base-content shadow-sm">
       <div class="card-body">
         <p class="mb-4 rounded-md bg-base-200/60 px-4 py-3 text-base font-bold text-base-content">
-          イベントを選択してください。<br>
-          次に巡回先を入力してください。
+          ・イベントを選択してください。<br>
+          ・次に巡回先を入力してください。<br>
+          ・イチ推しは１件のみ登録できます。
         </p>
 
         <h2 class="card-title">イベント</h2>
@@ -47,8 +48,7 @@
           <h2 class="card-title">巡回先</h2>
           <p class="mt-2 text-sm text-base-content/70">
             ・作者名またはサークル情報と外部ポストURLは任意です。<br>
-            ・どちらか一方の入力が必要です。最大20件まで登録できます。<br>
-            ・イチ推しは１件のみ登録できます。<br>
+            ・どちらか一方の入力が必要です。最大20件まで登録できます。
           </p>
           <% @list.errors.where(:list_items).each do |error| %>
             <p class="mt-2 text-sm text-error" role="alert"><%= error.full_message %></p>
@@ -76,7 +76,7 @@
 
         <button
           type="button"
-          class="mx-auto mt-2 inline-flex min-h-12 items-center justify-center rounded-full border-2 border-secondary px-6 font-bold text-secondary transition hover:bg-secondary hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
+          class="mx-auto mt-2 inline-flex min-h-12 items-center justify-center rounded-full border-2 border-[#f5af58] bg-[#f5af58] px-6 font-bold text-white transition hover:bg-[#d98f3e] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
           data-list-items-target="addButton"
           data-action="click->list-items#add"
         >
