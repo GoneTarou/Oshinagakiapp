@@ -23,15 +23,15 @@
   <%= tag.meta name: "twitter:image", content: ogp_image_url %>
 <% end %>
 
-<div class="min-h-screen w-full bg-[#f5af58] px-5 py-8">
-  <div class="mx-auto w-full max-w-6xl">
-    <header class="mb-8">
-      <p class="app-name text-sm font-semibold text-secondary">即売会しおり</p>
-      <h1 class="mt-2 text-3xl font-bold text-base-content"><%= event_context %></h1>
+<div class="min-h-screen w-full bg-[#f5af58] px-5 py-10 text-white">
+  <div class="mx-auto w-full max-w-3xl">
+    <header class="mb-8 text-center">
+      <p class="app-name text-4xl font-normal tracking-[0.08em] text-white sm:text-5xl">即売会しおり</p>
+      <h1 class="mt-6 text-3xl font-bold text-white"><%= event_context %></h1>
       <div class="mt-5 flex flex-wrap gap-3">
         <%= link_to "Xで共有する",
               x_share_url,
-              class: "btn btn-primary min-h-11",
+              class: "inline-flex min-h-12 items-center justify-center rounded-full border-2 border-white px-7 text-base font-bold text-white transition hover:bg-white hover:text-[#f5af58] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
               target: "_blank",
               rel: "noopener noreferrer" %>
       </div>
@@ -39,7 +39,7 @@
 
     <main>
       <% if @list_items.empty? %>
-        <section class="card card-compact bg-base-100 shadow-sm">
+        <section class="card card-compact bg-base-100 text-base-content shadow-sm">
           <div class="card-body items-center py-12 text-center">
             <h2 class="card-title">巡回先がありません</h2>
             <p class="text-base-content/70">登録された巡回先を確認できません。</p>
