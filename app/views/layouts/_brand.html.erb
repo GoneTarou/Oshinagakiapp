@@ -1,0 +1,13 @@
+<% wrapper_class = local_assigns.fetch(:wrapper_class, "block text-center") %>
+<% title_class = local_assigns.fetch(:title_class, "app-name text-3xl font-normal tracking-[0.08em]") %>
+<% subtitle_class = local_assigns.fetch(:subtitle_class, "mt-2 font-mono text-xs tracking-[0.12em] text-base-content/60") %>
+
+<%= link_to root_path, class: wrapper_class do %>
+  <p class="<%= title_class %>">
+    即売会しおり
+  </p>
+
+  <p class="<%= subtitle_class %>">
+    DOJIN EVENT MEMO
+  </p>
+<% end %>

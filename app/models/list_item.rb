@@ -5,7 +5,10 @@ class ListItem < ApplicationRecord
 
   before_validation :normalize_attributes
 
-  validates :space_number, uniqueness: { scope: :list_id, allow_nil: true }
+  validates :space_number,
+            uniqueness: { scope: :list_id, allow_nil: true },
+            length: { maximum: 100, allow_nil: true }
+  validates :source_url, length: { maximum: 2048, allow_nil: true }
   validate :source_url_is_allowed
 
   def pixiv_source?

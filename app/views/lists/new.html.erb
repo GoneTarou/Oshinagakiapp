@@ -1,4 +1,4 @@
-<% content_for :title, "巡回リストを作成 / 即売会しおり" %>
+<% content_for :title, "巡回リストを作成 | 即売会しおり" %>
 
 <div class="min-h-screen w-full bg-[#f5af58] px-5 py-10 text-white">
   <div class="mx-auto w-full max-w-3xl">
@@ -21,9 +21,7 @@
 
       <div class="card-body">
         <p class="mb-4 rounded-md bg-base-200/60 px-4 py-3 text-base font-bold text-base-content">
-          ・イベントを選択してください。<br>
-          ・次に巡回先を入力してください。<br>
-          ・イチ推しは１件のみ登録できます。
+          ・イベントを選択してください。
         </p>
 
         <div>
@@ -46,11 +44,15 @@
       data-controller="list-items"
     >
       <div class="bg-white px-6 py-4 text-[#f5af58]">
-        <h2 class="text-xl font-bold">2. 巡回先</h2>
+        <h2 class="text-xl font-bold">2. 巡回先リスト</h2>
       </div>
 
       <div class="card-body">
         <div>
+          <p class="mb-4 rounded-md bg-base-200/60 px-4 py-3 text-base font-bold text-base-content">
+            ・巡回先を入力してください。<br>
+            ・イチ推しは１件のみ登録できます。
+          </p>
           <p class="mt-2 text-sm text-base-content/70">
             ・作者名またはサークル情報と外部ポストURLは任意です。<br>
             ・どちらか一方の入力が必要です。最大20件まで登録できます。
@@ -70,6 +72,7 @@
             <div
               class="rounded-xl border-2 border-base-300 bg-base-100 p-4 shadow-sm"
               data-list-items-target="item"
+              data-controller="post-preview"
               <%= "hidden" if index >= 5 %>
             >
               <%= form.fields_for :list_items, item, child_index: index do |item_form| %>
@@ -91,7 +94,7 @@
     </section>
 
     <div class="flex justify-center">
-      <%= form.submit "巡回リストを作成", class: "min-h-16 rounded-full border-2 border-white bg-white px-10 text-lg font-bold text-[#f5af58] transition hover:bg-white/90 hover:text-[#f5af58] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" %>
+      <%= form.submit "巡回リストを作成", class: "inline-flex min-h-20 min-w-64 cursor-pointer items-center justify-center rounded-full border-2 border-white bg-white px-16 text-xl font-bold text-[#f5af58] transition hover:border-[#ededed] hover:bg-[#ededed] hover:text-[#f5af58] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" %>
     </div>
   <% end %>
   </div>

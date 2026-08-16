@@ -9,7 +9,7 @@ export default class extends Controller {
     adult: Boolean
   }
 
-  static targets = ["content", "fallback", "error", "title"]
+  static targets = ["content", "fallback", "error", "notice", "title"]
 
   connect() {
     const url = this.parseUrl()
@@ -138,7 +138,7 @@ export default class extends Controller {
       await this.loadTwitterWidgets()
       window.twttr.widgets.load(this.contentTarget)
     } catch {
-      this.showFallback()
+      this.showXPreviewUnavailable()
     }
   }
 
@@ -161,7 +161,8 @@ export default class extends Controller {
     blockquote.appendChild(link)
     this.contentTarget.replaceChildren(blockquote)
     this.contentTarget.hidden = false
-    this.fallbackTarget.hidden = true
+    this.noticeTarget.hidden = false
+    this.fallbackTarget.hidden = false
   }
 
   loadTwitterWidgets() {
@@ -224,12 +225,23 @@ export default class extends Controller {
     this.contentTarget.hidden = true
     this.fallbackTarget.hidden = false
     this.errorTarget.hidden = true
+    this.noticeTarget.hidden = true
   }
 
   showError(message) {
     this.contentTarget.hidden = true
     this.fallbackTarget.hidden = true
+    this.noticeTarget.hidden = true
     this.errorTarget.textContent = message
+    this.errorTarget.hidden = false
+  }
+
+  showXPreviewUnavailable() {
+    this.contentTarget.hidden = true
+    this.fallbackTarget.hidden = false
+    this.noticeTarget.hidden = false
+    this.errorTarget.textContent =
+      "センシティブ設定またはX側の制限によりプレビューできません。"
     this.errorTarget.hidden = false
   }
 }

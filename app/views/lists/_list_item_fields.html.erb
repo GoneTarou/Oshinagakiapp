@@ -8,27 +8,33 @@
 
 <div class="grid gap-4 sm:grid-cols-2">
   <div>
-    <%= item_form.label :space_number, "作者名またはサークル情報", class: "label" do %>
-      <span class="label-text">作者名またはサークル情報 <span class="text-base-content/60">(任意)</span></span>
+    <%= item_form.label :source_url, "外部ポストURL（X・pixiv）", class: "label" do %>
+      <span class="label-text">外部ポストURL（X・pixiv） <span class="text-base-content/60"></span></span>
     <% end %>
-    <%= item_form.text_field :space_number,
-          placeholder: "例：作者名(サークル名、東A-12b)",
-          class: "input input-bordered w-full#{" input-error" if item_form.object.errors[:space_number].any?}",
-          aria: { invalid: item_form.object.errors[:space_number].any? } %>
-    <% item_form.object.errors.where(:space_number).each do |error| %>
+    <%= item_form.url_field :source_url,
+          placeholder: "XもしくはpixivのURLのみ入力できます",
+          class: "input input-bordered w-full#{" input-error" if item_form.object.errors[:source_url].any?}",
+          maxlength: 2048,
+          aria: { invalid: item_form.object.errors[:source_url].any? },
+          data: {
+            post_preview_target: "input",
+            action: "input->post-preview#queueRender"
+          } %>
+    <% item_form.object.errors.where(:source_url).each do |error| %>
       <p class="mt-2 text-sm text-error" role="alert"><%= error.full_message %></p>
     <% end %>
   </div>
 
   <div>
-    <%= item_form.label :source_url, "外部ポストURL（X・pixiv）", class: "label" do %>
-      <span class="label-text">外部ポストURL（X・pixiv） <span class="text-base-content/60">(任意)</span></span>
+    <%= item_form.label :space_number, "作者名またはサークル情報", class: "label" do %>
+      <span class="label-text">作者名またはサークル情報 <span class="text-base-content/60"></span></span>
     <% end %>
-    <%= item_form.url_field :source_url,
-          placeholder: "XもしくはpixivのURLのみ入力できます",
-          class: "input input-bordered w-full#{" input-error" if item_form.object.errors[:source_url].any?}",
-          aria: { invalid: item_form.object.errors[:source_url].any? } %>
-    <% item_form.object.errors.where(:source_url).each do |error| %>
+    <%= item_form.text_field :space_number,
+          placeholder: "例：作者名(サークル名、東A-12b)",
+          class: "input input-bordered w-full#{" input-error" if item_form.object.errors[:space_number].any?}",
+          maxlength: 100,
+          aria: { invalid: item_form.object.errors[:space_number].any? } %>
+    <% item_form.object.errors.where(:space_number).each do |error| %>
       <p class="mt-2 text-sm text-error" role="alert"><%= error.full_message %></p>
     <% end %>
   </div>
@@ -50,3 +56,30 @@
     <span class="label-text">🔞 成人向け</span>
   </label>
 </div>
+
+<div
+  class="mt-4 flex justify-center"
+  data-post-preview-target="preview"
+  hidden
+></div>
+
+<p
+  class="mt-2 text-sm text-base-content/70"
+  data-post-preview-target="notice"
+  hidden
+>
+  ※センシティブ設定またはX側の制限によりプレビューできない場合があります。
+</p>
+
+<p
+  class="mt-2 text-sm text-base-content/70"
+  data-post-preview-target="message"
+  role="status"
+  hidden
+></p>
+
+<%= link_to "Xで開く", "#",
+      class: "btn btn-sm mt-2 border-[#f5af58] bg-[#f5af58] text-white hover:border-[#e49b45] hover:bg-[#e49b45]",
+      target: "_blank",
+      rel: "noopener noreferrer",
+      data: { post_preview_target: "externalLink" } %>

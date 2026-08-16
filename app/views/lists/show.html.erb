@@ -28,7 +28,7 @@
     <header class="mb-8 text-center">
       <p class="app-name text-4xl font-normal tracking-[0.08em] text-white sm:text-5xl">即売会しおり</p>
       <h1 class="mt-6 text-3xl font-bold text-white"><%= event_context %></h1>
-      <div class="mt-5 flex flex-wrap gap-3">
+      <div class="mt-5 flex justify-center">
         <%= link_to "Xで共有する",
               x_share_url,
               class: "inline-flex min-h-12 items-center justify-center rounded-full border-2 border-white bg-white px-7 text-base font-bold text-[#f5af58] transition hover:bg-white/90 hover:text-[#f5af58] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
@@ -53,5 +53,13 @@
         </div>
       <% end %>
     </main>
+
+    <div class="mt-8 flex justify-center">
+      <%= link_to "Xで共有する",
+            x_share_url,
+            class: "inline-flex min-h-12 items-center justify-center rounded-full border-2 border-white bg-white px-7 text-base font-bold text-[#f5af58] transition hover:bg-white/90 hover:text-[#f5af58] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
+            target: "_blank",
+            rel: "noopener noreferrer" %>
+    </div>
   </div>
 </div>

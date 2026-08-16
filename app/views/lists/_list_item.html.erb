@@ -5,7 +5,7 @@
     <div class="card-body gap-4 p-4">
       <div class="flex flex-wrap items-center gap-2">
         <% if space_label.present? %>
-          <span class="badge badge-error badge-lg font-bold"><%= space_label %></span>
+          <span class="badge badge-info badge-lg font-bold"><%= space_label %></span>
         <% end %>
 
         <% if item.is_featured? %>
@@ -33,9 +33,16 @@
             <div data-external-post-target="content" hidden></div>
           </div>
 
+          <p
+            data-external-post-target="notice"
+            class="mt-2 text-center text-sm text-base-content/70"
+            hidden>
+            ※センシティブ設定またはX側の制限によりプレビューできない場合があります。
+          </p>
+
           <div class="flex justify-center" data-external-post-target="fallback">
-            <%= link_to (item.pixiv_source? ? "pixivで開く" : "外部ポストを開く"), item.source_url,
-                  class: "btn btn-secondary btn-sm",
+            <%= link_to (item.pixiv_source? ? "pixivで開く" : "Xで開く"), item.source_url,
+                  class: "btn btn-sm border-[#f5af58] bg-[#f5af58] text-white hover:border-[#e49b45] hover:bg-[#e49b45]",
                   target: "_blank",
                   rel: "noopener noreferrer" %>
           </div>

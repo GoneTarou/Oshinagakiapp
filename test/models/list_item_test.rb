@@ -53,4 +53,29 @@ class ListItemTest < ActiveSupport::TestCase
     assert item.valid?
     assert_nil item.source_url
   end
+
+  test "limits author or circle information to 100 characters" do
+    item = @list.list_items.build(space_number: "あ" * 100)
+
+    assert item.valid?
+
+    item.space_number = "あ" * 101
+
+    assert_not item.valid?
+    assert_includes item.errors.details[:space_number], { error: :too_long, count: 100 }
+  end
+
+  test "limits source URLs to 2,048 characters" do
+    prefix = "https://x.com/example/status/"
+    source_url = "#{prefix}#{"1" * (2048 - prefix.length)}"
+    item = @list.list_items.build(source_url: source_url)
+
+    assert_equal 2048, source_url.length
+    assert item.valid?
+
+    item.source_url = "#{source_url}1"
+
+    assert_not item.valid?
+    assert_includes item.errors.details[:source_url], { error: :too_long, count: 2048 }
+  end
 end
