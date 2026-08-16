@@ -14,6 +14,7 @@
     <%= item_form.url_field :source_url,
           placeholder: "XもしくはpixivのURLのみ入力できます",
           class: "input input-bordered w-full#{" input-error" if item_form.object.errors[:source_url].any?}",
+          maxlength: 2048,
           aria: { invalid: item_form.object.errors[:source_url].any? },
           data: {
             post_preview_target: "input",
@@ -31,6 +32,7 @@
     <%= item_form.text_field :space_number,
           placeholder: "例：作者名(サークル名、東A-12b)",
           class: "input input-bordered w-full#{" input-error" if item_form.object.errors[:space_number].any?}",
+          maxlength: 100,
           aria: { invalid: item_form.object.errors[:space_number].any? } %>
     <% item_form.object.errors.where(:space_number).each do |error| %>
       <p class="mt-2 text-sm text-error" role="alert"><%= error.full_message %></p>
