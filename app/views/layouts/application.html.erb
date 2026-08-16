@@ -33,9 +33,10 @@
     <div class="min-h-screen lg:pl-64 xl:pl-72">
       <header class="border-b border-white/30 bg-[#f5af58] px-5 py-4 lg:hidden">
         <div class="flex items-center justify-between">
-          <%= link_to root_path, class: "app-name text-2xl text-white" do %>
-            即売会しおり
-          <% end %>
+          <%= render "layouts/brand",
+                wrapper_class: "block text-left",
+                title_class: "app-name text-2xl font-normal tracking-[0.08em] text-white",
+                subtitle_class: "mt-1 font-mono text-[10px] tracking-[0.12em] text-white/70" %>
 
           <details class="relative">
             <summary class="cursor-pointer list-none rounded-full border-2 border-white px-4 py-2 font-bold text-white">
