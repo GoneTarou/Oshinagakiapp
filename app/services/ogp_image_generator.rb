@@ -6,6 +6,8 @@ class OgpImageGenerator
   EVENT_CONTEXT_DEFAULT_POINTSIZE = 52
   EVENT_CONTEXT_COMPACT_POINTSIZE = 40
   EVENT_CONTEXT_COMPACT_THRESHOLD = 15
+  ARTWORK_HEIGHT = 260
+  ARTWORK_RIGHT_OFFSET = 20
 
   def initialize(list)
     @list = list
@@ -42,6 +44,7 @@ class OgpImageGenerator
       command.annotate("+0+155", featured_space_text) if featured_space_text.present?
     end
 
+    image = add_artwork(image)
     image.format("png")
     image.to_blob
   end
@@ -58,6 +61,20 @@ class OgpImageGenerator
 
   def app_title_font_path
     Rails.root.join("app/assets/fonts/nicomoji-plus_v2-5.ttf")
+  end
+
+  def artwork_path
+    Rails.root.join("app/assets/images/30.png")
+  end
+
+  def add_artwork(image)
+    artwork = MiniMagick::Image.open(artwork_path)
+    artwork.resize("#{ARTWORK_HEIGHT}x")
+
+    image.composite(artwork) do |command|
+      command.gravity("southeast")
+      command.geometry("+#{ARTWORK_RIGHT_OFFSET}+0")
+    end
   end
 
   def event_context
