@@ -25,9 +25,6 @@ test:
 production:
   primary: &production
     <<: *postgresql
-  cache:
-    <<: *production
-    migrations_paths: db/cache_migrate
   queue:
     <<: *production
     migrations_paths: db/queue_migrate
