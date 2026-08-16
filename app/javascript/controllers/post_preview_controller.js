@@ -6,11 +6,13 @@ export default class extends Controller {
   static targets = ["input", "preview", "message"]
 
   connect() {
+    this.renderVersion = 0
     this.render()
   }
 
   disconnect() {
     window.clearTimeout(this.renderTimeout)
+    this.renderVersion += 1
   }
 
   queueRender() {
@@ -22,6 +24,7 @@ export default class extends Controller {
   }
 
   render() {
+    const renderVersion = ++this.renderVersion
     const value = this.inputTarget.value.trim()
 
     this.previewTarget.replaceChildren()
@@ -32,8 +35,13 @@ export default class extends Controller {
 
     const url = this.parseUrl(value)
 
+    if (url && this.isPixivUrl(url)) {
+      this.showMessage("Pixivのプレビューには未対応です。")
+      return
+    }
+
     if (!url || !this.isXPostUrl(url)) {
-      this.showMessage("Xの投稿URLを入力するとプレビューが表示されます。")
+      this.showMessage("Xの投稿URLを入力してください。", true)
       return
     }
 
@@ -52,12 +60,16 @@ export default class extends Controller {
 
     void this.loadTwitterWidgets()
       .then(() => {
+        if (!this.isCurrentRender(renderVersion)) return
+
         window.twttr.widgets.load(this.previewTarget)
       })
       .catch(() => {
+        if (!this.isCurrentRender(renderVersion)) return
+
         this.previewTarget.replaceChildren()
         this.previewTarget.hidden = true
-        this.showMessage("Xポストのプレビューを表示できませんでした。")
+        this.showMessage("Xポストのプレビューを表示できませんでした。", true)
       })
   }
 
@@ -79,8 +91,18 @@ export default class extends Controller {
     return /^\/[^/]+\/status\/\d+\/?$/.test(url.pathname)
   }
 
-  showMessage(message) {
+  isPixivUrl(url) {
+    return ["pixiv.net", "www.pixiv.net"].includes(url.hostname)
+  }
+
+  isCurrentRender(renderVersion) {
+    return this.renderVersion === renderVersion
+  }
+
+  showMessage(message, isError = false) {
     this.messageTarget.textContent = message
+    this.messageTarget.classList.toggle("text-error", isError)
+    this.messageTarget.classList.toggle("text-base-content/70", !isError)
     this.messageTarget.hidden = false
   }
 
