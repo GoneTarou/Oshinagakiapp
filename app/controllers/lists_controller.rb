@@ -21,9 +21,17 @@ class ListsController < ApplicationController
     @list_items = @list.list_items.order(is_featured: :desc, created_at: :asc, id: :asc)
   end
 
-  def ogp
+  def ogp_image
     list = List.includes(:event, :list_items).find_by!(token: params[:token])
-    image_data = OgpImageGenerator.new(list).call
+
+    image_data = Rails.cache.fetch(
+      [ "ogp-image", OgpImageGenerator::CACHE_VERSION, list.id ],
+      expires_in: 1.year
+    ) do
+      OgpImageGenerator.new(list).call
+    end
+
+    expires_in 1.year, public: true, immutable: true
 
     send_data image_data,
               type: "image/png",

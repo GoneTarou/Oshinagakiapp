@@ -3,7 +3,10 @@
 <% share_url = list_url(token: @list.token) %>
 <% share_text = "#{event_context}の巡回リストを共有します #即売会しおり" %>
 <% x_share_url = "https://twitter.com/intent/tweet?url=#{ERB::Util.url_encode(share_url)}&text=#{ERB::Util.url_encode(share_text)}" %>
-<% ogp_image_url = list_ogp_url(token: @list.token) %>
+<% ogp_image_url = list_ogp_image_url(
+     token: @list.token,
+     v: OgpImageGenerator::CACHE_VERSION
+   ) %>
 <% ogp_description = "#{event_context}の巡回リスト" %>
 
 <% content_for :head do %>
