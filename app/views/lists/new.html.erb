@@ -70,6 +70,7 @@
             <div
               class="rounded-xl border-2 border-base-300 bg-base-100 p-4 shadow-sm"
               data-list-items-target="item"
+              data-controller="post-preview"
               <%= "hidden" if index >= 5 %>
             >
               <%= form.fields_for :list_items, item, child_index: index do |item_form| %>

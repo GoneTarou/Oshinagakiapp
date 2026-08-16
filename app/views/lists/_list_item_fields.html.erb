@@ -8,6 +8,23 @@
 
 <div class="grid gap-4 sm:grid-cols-2">
   <div>
+    <%= item_form.label :source_url, "外部ポストURL（X・pixiv）", class: "label" do %>
+      <span class="label-text">外部ポストURL（X・pixiv） <span class="text-base-content/60">(任意)</span></span>
+    <% end %>
+    <%= item_form.url_field :source_url,
+          placeholder: "XもしくはpixivのURLのみ入力できます",
+          class: "input input-bordered w-full#{" input-error" if item_form.object.errors[:source_url].any?}",
+          aria: { invalid: item_form.object.errors[:source_url].any? },
+          data: {
+            post_preview_target: "input",
+            action: "input->post-preview#queueRender"
+          } %>
+    <% item_form.object.errors.where(:source_url).each do |error| %>
+      <p class="mt-2 text-sm text-error" role="alert"><%= error.full_message %></p>
+    <% end %>
+  </div>
+
+  <div>
     <%= item_form.label :space_number, "作者名またはサークル情報", class: "label" do %>
       <span class="label-text">作者名またはサークル情報 <span class="text-base-content/60">(任意)</span></span>
     <% end %>
@@ -16,19 +33,6 @@
           class: "input input-bordered w-full#{" input-error" if item_form.object.errors[:space_number].any?}",
           aria: { invalid: item_form.object.errors[:space_number].any? } %>
     <% item_form.object.errors.where(:space_number).each do |error| %>
-      <p class="mt-2 text-sm text-error" role="alert"><%= error.full_message %></p>
-    <% end %>
-  </div>
-
-  <div>
-    <%= item_form.label :source_url, "外部ポストURL（X・pixiv）", class: "label" do %>
-      <span class="label-text">外部ポストURL（X・pixiv） <span class="text-base-content/60">(任意)</span></span>
-    <% end %>
-    <%= item_form.url_field :source_url,
-          placeholder: "XもしくはpixivのURLのみ入力できます",
-          class: "input input-bordered w-full#{" input-error" if item_form.object.errors[:source_url].any?}",
-          aria: { invalid: item_form.object.errors[:source_url].any? } %>
-    <% item_form.object.errors.where(:source_url).each do |error| %>
       <p class="mt-2 text-sm text-error" role="alert"><%= error.full_message %></p>
     <% end %>
   </div>
@@ -50,3 +54,16 @@
     <span class="label-text">🔞 成人向け</span>
   </label>
 </div>
+
+<div
+  class="mt-4 flex justify-center"
+  data-post-preview-target="preview"
+  hidden
+></div>
+
+<p
+  class="mt-2 text-sm text-base-content/70"
+  data-post-preview-target="message"
+  role="status"
+  hidden
+></p>
