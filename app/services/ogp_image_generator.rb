@@ -81,13 +81,13 @@ class OgpImageGenerator
   end
 
   def featured_space_text
-    space_number = featured_space_number || first_space_number
-    return if space_number.blank?
+    circle_info = featured_circle_info || first_registered_circle_info
+    return if circle_info.blank?
 
-    "イチ推し #{space_number}"
+    "イチ推し #{circle_info}"
   end
 
-  def featured_space_number
+  def featured_circle_info
     featured_item = ordered_list_items.find do |item|
       item.is_featured? && !item.is_adult_content? && item.space_number.present?
     end
@@ -95,7 +95,7 @@ class OgpImageGenerator
     featured_item&.space_number
   end
 
-  def first_space_number
+  def first_registered_circle_info
     first_item = ordered_list_items.find do |item|
       !item.is_adult_content? && item.space_number.present?
     end
