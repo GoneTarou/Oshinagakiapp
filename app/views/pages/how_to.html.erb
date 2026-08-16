@@ -19,6 +19,10 @@
           <p>
             リスト作成画面で、参加するイベントを選択してください。
           </p>
+          <%= image_tag "11.png",
+                alt: "イベントを選択する画面",
+                class: "mt-4 h-auto w-full rounded-lg border border-base-300",
+                loading: "lazy" %>
         </div>
       </section>
 
@@ -34,7 +38,18 @@
             <li>外部ポストURLはXまたはpixivのみ登録できます。</li>
             <li>巡回先は最大20件まで登録できます。</li>
             <li>イチ推しは1件だけ選択できます。</li>
+            <li>成人向け作品のチェックができます。</li>
           </ul>
+          <div class="mt-4 grid gap-4 sm:grid-cols-2">
+            <%= image_tag "22.png",
+                  alt: "巡回先を登録する画面",
+                  class: "h-auto w-full rounded-lg border border-base-300",
+                  loading: "lazy" %>
+            <%= image_tag "33.png",
+                  alt: "巡回先を追加する画面",
+                  class: "h-auto w-full rounded-lg border border-base-300",
+                  loading: "lazy" %>
+          </div>
         </div>
       </section>
 
@@ -48,7 +63,12 @@
             <li>作成後のリストは編集・削除できません。</li>
             <li>リストは一覧公開されず、共有URLからのみ閲覧できます。</li>
             <li>詳細画面の「Xで共有する」から共有できます。</li>
+            <li>成人向け作品をチェックを入れた作品は、成人向けコンテンツを表示をクリックするまで表示されません。</li>
           </ul>
+          <%= image_tag "44.png",
+                alt: "リストを作成して共有する画面",
+                class: "mt-4 h-auto w-full rounded-lg border border-base-300",
+                loading: "lazy" %>
         </div>
       </section>
 
