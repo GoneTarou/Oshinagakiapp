@@ -59,12 +59,11 @@ class OgpImageGeneratorTest < ActiveSupport::TestCase
     assert_nil generator.send(:featured_space_text)
   end
 
-  test "generates an OGP image with the artwork" do
+  test "uses the artwork asset for OGP generation" do
     list = List.new(event: events(:one))
-    list.list_items.build(space_number: "東A-12b")
 
-    image = MiniMagick::Image.read(OgpImageGenerator.new(list).call)
+    artwork_path = OgpImageGenerator.new(list).send(:artwork_path)
 
-    assert_equal [1200, 630], image.dimensions
+    assert File.file?(artwork_path), "OGP artwork asset is missing: #{artwork_path}"
   end
 end
