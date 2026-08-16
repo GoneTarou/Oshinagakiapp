@@ -1,6 +1,8 @@
 require "mini_magick"
 
 class OgpImageGenerator
+  CACHE_VERSION = 1
+
   WIDTH = 1200
   HEIGHT = 630
   EVENT_CONTEXT_DEFAULT_POINTSIZE = 52
