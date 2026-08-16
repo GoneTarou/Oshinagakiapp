@@ -65,7 +65,21 @@
 
 <p
   class="mt-2 text-sm text-base-content/70"
+  data-post-preview-target="notice"
+  hidden
+>
+  ※センシティブ設定またはX側の制限によりプレビューできない場合があります。
+</p>
+
+<p
+  class="mt-2 text-sm text-base-content/70"
   data-post-preview-target="message"
   role="status"
   hidden
 ></p>
+
+<%= link_to "Xで開く", "#",
+      class: "btn btn-sm mt-2 border-[#f5af58] bg-[#f5af58] text-white hover:border-[#e49b45] hover:bg-[#e49b45]",
+      target: "_blank",
+      rel: "noopener noreferrer",
+      data: { post_preview_target: "externalLink" } %>

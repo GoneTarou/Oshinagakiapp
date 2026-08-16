@@ -3,7 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 let twitterWidgetsPromise
 
 export default class extends Controller {
-  static targets = ["input", "preview", "message"]
+  static targets = ["input", "preview", "message", "notice", "externalLink"]
 
   connect() {
     this.renderVersion = 0
@@ -30,6 +30,8 @@ export default class extends Controller {
     this.previewTarget.replaceChildren()
     this.previewTarget.hidden = true
     this.messageTarget.hidden = true
+    this.noticeTarget.hidden = true
+    this.externalLinkTarget.hidden = true
 
     if (value === "") return
 
@@ -57,6 +59,9 @@ export default class extends Controller {
     blockquote.appendChild(link)
     this.previewTarget.appendChild(blockquote)
     this.previewTarget.hidden = false
+    this.noticeTarget.hidden = false
+    this.externalLinkTarget.href = url.href
+    this.externalLinkTarget.hidden = false
 
     void this.loadTwitterWidgets()
       .then(() => {
@@ -69,7 +74,10 @@ export default class extends Controller {
 
         this.previewTarget.replaceChildren()
         this.previewTarget.hidden = true
-        this.showMessage("Xポストのプレビューを表示できませんでした。", true)
+        this.showMessage(
+          "センシティブ設定またはX側の制限によりプレビューできません。",
+          true
+        )
       })
   }
 
