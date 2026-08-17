@@ -1,4 +1,7 @@
 class ListsController < ApplicationController
+  # OGP images and shared lists must also be available to crawlers and older clients.
+  allow_browser versions: :modern, except: %i[show ogp_image]
+
   def new
     @list = List.new
     @list.list_items.build
