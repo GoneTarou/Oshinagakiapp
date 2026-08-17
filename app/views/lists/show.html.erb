@@ -8,6 +8,16 @@
      v: OgpImageGenerator::CACHE_VERSION
    ) %>
 <% ogp_description = "#{event_context}の巡回リスト" %>
+<%
+  copy_items = @copy_list_items.map do |item|
+    {
+      space_number: item.space_number,
+      source_url: item.source_url,
+      is_featured: item.is_featured?,
+      is_adult_content: item.is_adult_content?
+    }
+  end
+%>
 
 <% content_for :head do %>
   <%= tag.meta name: "description", content: ogp_description %>
@@ -27,11 +37,25 @@
 <% end %>
 
 <div class="min-h-screen w-full bg-[#f5af58] px-5 py-10 text-white">
-  <div class="mx-auto w-full max-w-3xl">
+  <div
+    class="mx-auto w-full max-w-3xl"
+    data-controller="copy-list"
+    data-copy-list-event-id-value="<%= @list.event_id %>"
+    data-copy-list-items-value="<%= copy_items.to_json %>"
+    data-copy-list-new-list-url-value="<%= new_list_path %>"
+  >
     <header class="mb-8 text-center">
       <p class="app-name text-4xl font-normal tracking-[0.08em] text-white sm:text-5xl">即売会しおり</p>
       <h1 class="mt-6 text-3xl font-bold text-white"><%= event_context %></h1>
-      <div class="mt-5 flex justify-center">
+      <div class="mt-5 flex flex-col justify-center gap-3 md:flex-row md:items-center">
+        <button
+          type="button"
+          class="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-white bg-white px-6 text-sm font-bold text-[#f5af58] transition hover:border-[#ededed] hover:bg-[#ededed] hover:text-[#f5af58] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:text-base"
+          data-action="click->copy-list#copy"
+        >
+          このリストの内容を使って新しくリストを作る
+        </button>
+
         <%= link_to "Xで共有する",
               x_share_url,
               class: "inline-flex min-h-12 items-center justify-center rounded-full border-2 border-white bg-white px-7 text-base font-bold text-[#f5af58] transition hover:bg-white/90 hover:text-[#f5af58] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
@@ -57,12 +81,30 @@
       <% end %>
     </main>
 
-    <div class="mt-8 flex justify-center">
+    <div class="mt-8 flex flex-col justify-center gap-3 md:flex-row md:items-center">
+      <button
+        type="button"
+        title="このリスト内容を使って新しくリストを作る"
+        class="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-white bg-white px-6 text-sm font-bold text-[#f5af58] transition hover:border-[#ededed] hover:bg-[#ededed] hover:text-[#f5af58] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:text-base"
+        data-action="click->copy-list#copy"
+      >
+        このリストの内容を使って新しくリストを作る
+      </button>
+
       <%= link_to "Xで共有する",
             x_share_url,
             class: "inline-flex min-h-12 items-center justify-center rounded-full border-2 border-white bg-white px-7 text-base font-bold text-[#f5af58] transition hover:bg-white/90 hover:text-[#f5af58] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
             target: "_blank",
             rel: "noopener noreferrer" %>
     </div>
+
+    <p
+      class="mt-3 text-center text-sm font-bold text-error"
+      data-copy-list-target="error"
+      role="alert"
+      hidden
+    >
+      リスト内容をコピーできませんでした。
+    </p>
   </div>
 </div>

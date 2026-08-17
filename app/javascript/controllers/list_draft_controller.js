@@ -1,6 +1,9 @@
 import { Controller } from "@hotwired/stimulus"
-
-const STORAGE_KEY = "oshinagaki:list-draft:v1"
+import {
+  clearListDraft,
+  readListDraft,
+  writeListDraft
+} from "controllers/list_draft_storage"
 
 export default class extends Controller {
   static values = { reset: Boolean }
@@ -23,11 +26,7 @@ export default class extends Controller {
       checked: field.type === "checkbox" ? field.checked : null
     }))
 
-    try {
-      window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(fields))
-    } catch {
-      // ストレージを利用できない場合は下書き保存を行わない
-    }
+    writeListDraft(fields)
   }
 
   restore() {
@@ -76,24 +75,11 @@ export default class extends Controller {
   }
 
   readDraft() {
-    try {
-      const value = window.sessionStorage.getItem(STORAGE_KEY)
-
-      if (!value) return null
-
-      const draft = JSON.parse(value)
-      return Array.isArray(draft) ? draft : null
-    } catch {
-      return null
-    }
+    return readListDraft()
   }
 
   clear() {
-    try {
-      window.sessionStorage.removeItem(STORAGE_KEY)
-    } catch {
-      // ストレージを利用できない場合は何もしない
-    }
+    clearListDraft()
   }
 
   removeResetParameter() {
