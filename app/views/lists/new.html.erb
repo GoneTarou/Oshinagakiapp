@@ -13,7 +13,12 @@
   <%= form_with model: @list,
         url: lists_path,
         class: "space-y-8",
-        data: { controller: "featured-items" } do |form| %>
+        data: {
+          controller: "featured-items list-draft",
+          action: "input->list-draft#save change->list-draft#save",
+          list_draft_reset_value: params[:reset_draft] == "1",
+          turbo: false
+        } do |form| %>
     <section class="card card-compact overflow-hidden bg-base-100 text-base-content shadow-sm">
       <div class="bg-white px-6 py-4 text-[#f5af58]">
         <h2 class="text-xl font-bold">1. イベント</h2>
@@ -23,6 +28,10 @@
         <p class="mb-4 rounded-md bg-base-200/60 px-4 py-3 text-base font-bold text-base-content">
           ・イベントを選択してください。
         </p>
+
+        <% if flash[:creation_rate_limit_error].present? %>
+          <p class="mb-4 whitespace-pre-line rounded-md border border-error bg-error/10 px-4 py-3 text-sm font-bold text-error" role="alert"><%= flash[:creation_rate_limit_error] %></p>
+        <% end %>
 
         <div>
           <%= form.label :event_id, "イベント", class: "label" do %>
@@ -42,6 +51,7 @@
     <section
       class="card card-compact overflow-hidden bg-base-100 text-base-content shadow-sm"
       data-controller="list-items"
+      data-action="list-draft:restored@window->list-items#restore"
     >
       <div class="bg-white px-6 py-4 text-[#f5af58]">
         <h2 class="text-xl font-bold">2. 巡回先リスト</h2>
@@ -61,7 +71,7 @@
             <p class="mt-2 text-sm text-error" role="alert"><%= error.full_message %></p>
           <% end %>
           <% @list.errors.where(:base).each do |error| %>
-            <p class="mt-2 text-sm text-error" role="alert"><%= error.message %></p>
+            <p class="mt-2 whitespace-pre-line text-sm text-error" role="alert"><%= error.message %></p>
           <% end %>
         </div>
 

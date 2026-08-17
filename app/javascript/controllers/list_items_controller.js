@@ -8,6 +8,11 @@ export default class extends Controller {
     this.updateAddButton()
   }
 
+  restore() {
+    this.revealFilledItems()
+    this.updateAddButton()
+  }
+
   add() {
     const nextItem = this.itemTargets.find((item) => item.hidden)
 

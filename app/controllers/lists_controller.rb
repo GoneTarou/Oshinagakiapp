@@ -1,4 +1,16 @@
 class ListsController < ApplicationController
+  CREATION_RATE_LIMIT_MESSAGE = <<~MESSAGE.strip.freeze
+    短時間に作成できる回数を超えました。
+    少し待ってから、もう一度お試しください。
+  MESSAGE
+
+  # OGP images and shared lists must also be available to crawlers and older clients.
+  allow_browser versions: :modern, except: %i[show ogp_image]
+  rate_limit to: 3,
+             within: 1.minute,
+             only: :create,
+             with: :render_creation_rate_limit_error
+
   def new
     @list = List.new
     @list.list_items.build
@@ -59,6 +71,12 @@ class ListsController < ApplicationController
   end
 
   private
+
+  def render_creation_rate_limit_error
+    flash[:creation_rate_limit_error] = CREATION_RATE_LIMIT_MESSAGE
+
+    redirect_to new_list_path, status: :see_other
+  end
 
   def load_events
     @events = Event.order(:id)
