@@ -18,10 +18,16 @@
         DOJIN EVENT MEMO
       </p>
 
-      <%= link_to new_list_path(reset_draft: 1),
-            class: "mt-10 inline-flex min-h-24 min-w-72 cursor-pointer items-center justify-center rounded-full border-2 border-white bg-white px-20 text-2xl font-bold text-[#f5af58] transition hover:border-[#ededed] hover:bg-[#ededed] hover:text-[#f5af58] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" do %>
-        ＋ 新しい巡回リストを作る
-      <% end %>
+      <div class="mt-10 flex flex-col items-center justify-center gap-4 lg:flex-row">
+        <%= link_to "使い方を確認する",
+              how_to_path,
+              class: "inline-flex min-h-20 w-full cursor-pointer items-center justify-center whitespace-nowrap rounded-full border-2 border-white bg-white px-6 text-lg font-bold text-[#f5af58] transition hover:border-[#ededed] hover:bg-[#ededed] hover:text-[#f5af58] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:min-h-24 lg:w-[23rem] lg:px-8 lg:text-2xl" %>
+
+        <%= link_to new_list_path(reset_draft: 1),
+              class: "inline-flex min-h-20 w-full cursor-pointer items-center justify-center whitespace-nowrap rounded-full border-2 border-white bg-white px-6 text-lg font-bold text-[#f5af58] transition hover:border-[#ededed] hover:bg-[#ededed] hover:text-[#f5af58] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:min-h-24 lg:w-[23rem] lg:px-8 lg:text-2xl" do %>
+          ＋ 新しい巡回リストを作る
+        <% end %>
+      </div>
 
       <section
         class="mx-auto mt-16 max-w-2xl rounded-xl border-2 border-white bg-white px-5 py-8 sm:px-8"
@@ -32,8 +38,9 @@
         </h2>
 
         <ul class="mx-auto mt-5 max-w-xl list-disc space-y-2 text-left text-sm leading-7 text-[#f5af58]">
-          <li>リストを作成すると共有URLが発行されます。</li>
-          <li>作成後の編集・削除はできません。</li>
+          <li>自分が購入したいサークルの情報をフォロワーに共有できます</li>
+          <li>Xのお品書きポストのURLを入力するとプレビューが表示され、確認することができます</li>
+          <li>リストを作成すると共有URLが発行されます</li>
         </ul>
 
         <a
@@ -42,6 +49,7 @@
         >
           使い方を見る
         </a>
+
       </section>
 
       <p class="mt-7 font-mono text-xs text-white/80">
