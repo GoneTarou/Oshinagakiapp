@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root "pages#home"
   get "how-to", to: "pages#how_to", as: :how_to
+  get "updates", to: "pages#updates", as: :updates
 
   get "lists/:token/ogp", to: "lists#ogp_image", as: :list_ogp_image
   get "lists/:token/list_items/:id/pixiv_title",

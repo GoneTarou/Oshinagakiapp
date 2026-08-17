@@ -1,0 +1,45 @@
+<% content_for :title, "更新情報 / 即売会しおり" %>
+
+<div
+  class="min-h-screen w-full bg-[#f5af58] bg-cover bg-center bg-no-repeat px-5 py-12 text-base-content sm:py-16"
+  style="background-image: url('<%= asset_path("sikakuf8.png") %>');"
+>
+  <main class="mx-auto w-full max-w-3xl" aria-labelledby="updates-title">
+    <header class="mb-8 pt-8 text-center text-white">
+      <h1 id="updates-title" class="text-2xl font-bold sm:text-3xl">
+        更新情報
+      </h1>
+    </header>
+
+    <div class="space-y-5">
+      <article class="card card-compact bg-base-100 shadow-sm">
+        <div class="card-body">
+          <time datetime="2026-08-17" class="text-sm font-bold text-[#d98f3e]">
+            2026年8月17日
+          </time>
+          <h2 class="card-title mt-1">リスト作成をもっと便利にしました</h2>
+          <ul class="mt-2 list-disc space-y-2 pl-5">
+            <li>共有リストの内容を使って、新しい巡回リストを作成できるようにしました。</li>
+            <li>作成途中の入力内容をブラウザに保存し、戻ったときに復元できるようにしました。</li>
+            <li>短時間での連続作成を制限し、不正利用への対策を追加しました。</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card card-compact bg-base-100 shadow-sm">
+        <div class="card-body">
+          <time datetime="2026-08-16" class="text-sm font-bold text-[#d98f3e]">
+            2026年8月16日
+          </time>
+          <h2 class="card-title mt-1">共有とプレビューを改善しました</h2>
+          <ul class="mt-2 list-disc space-y-2 pl-5">
+            <li>共有時に表示されるOGP画像のデザインを更新しました。</li>
+            <li>Xの投稿URLを入力したとき、作成画面でプレビューできるようにしました。</li>
+            <li>プレビューできない投稿には、案内文と「Xで開く」リンクを表示するようにしました。</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+
+  </main>
+</div>

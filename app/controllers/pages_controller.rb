@@ -7,4 +7,7 @@ class PagesController < ApplicationController
 
   def how_to
   end
+
+  def updates
+  end
 end
