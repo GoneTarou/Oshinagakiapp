@@ -29,8 +29,11 @@ class ListsController < ApplicationController
   end
 
   def show
-    @list = List.includes(:event, :list_items).find_by!(token: params[:token])
-    @list_items = @list.list_items.order(is_featured: :desc, created_at: :asc, id: :asc)
+    @list = List.includes(:event).find_by!(token: params[:token])
+    @copy_list_items = @list.list_items.order(:created_at, :id).to_a
+    @list_items = @copy_list_items.sort_by do |item|
+      [ item.is_featured? ? 0 : 1, item.created_at, item.id ]
+    end
   end
 
   def ogp_image
