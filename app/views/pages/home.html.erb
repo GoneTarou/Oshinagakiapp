@@ -1,8 +1,11 @@
 <% content_for :title, "即売会しおり" %>
 
-<div class="min-h-screen w-full bg-[#f5af58] px-5 py-10 text-white">
+<div
+  class="min-h-screen w-full bg-[#f5af58] bg-cover bg-center bg-no-repeat px-5 py-10 text-white"
+  style="background-image: url('<%= asset_path("sikakuf8.png") %>');"
+>
   <div class="mx-auto flex min-h-[80vh] w-full max-w-3xl items-center justify-center">
-    <main class="w-full text-center">
+    <main class="w-full pt-12 text-center sm:pt-16">
       <h1 class="app-name text-5xl font-normal tracking-[0.08em] text-white sm:text-7xl">
         即売会しおり
       </h1>
@@ -21,23 +24,21 @@
       <% end %>
 
       <section
-        class="mx-auto mt-16 max-w-2xl rounded-xl border-2 border-dotted border-white bg-white/10 px-5 py-8 sm:px-8"
+        class="mx-auto mt-16 max-w-2xl rounded-xl border-2 border-white bg-white px-5 py-8 sm:px-8"
         aria-labelledby="home-notice-title"
       >
-        <h2 id="home-notice-title" class="text-base font-bold text-white sm:text-lg">
-          即売会のイベントを選んで、巡回先を登録できます<br>
-          イベント終了後に購入したサークルを共有することもできます
+        <h2 id="home-notice-title" class="text-base font-bold text-[#f5af58] sm:text-lg">
+          巡回したいサークルのお品書きポストを登録してXで共有しましょう!<br>
         </h2>
 
-        <ul class="mx-auto mt-5 max-w-xl list-disc space-y-2 text-left text-sm leading-7 text-white">
+        <ul class="mx-auto mt-5 max-w-xl list-disc space-y-2 text-left text-sm leading-7 text-[#f5af58]">
           <li>リストを作成すると共有URLが発行されます。</li>
           <li>作成後の編集・削除はできません。</li>
-          <li>リスト自体は公開されず、共有URLからのみ確認できます。</li>
         </ul>
 
         <a
           href="<%= how_to_path %>"
-          class="mt-5 inline-block rounded-md border border-white px-5 py-2 text-sm font-bold text-white hover:bg-white hover:text-[#f5af58] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          class="mt-5 inline-block rounded-md border border-[#f5af58] bg-[#f5af58] px-5 py-2 text-sm font-bold text-white transition hover:border-[#d98f3e] hover:bg-[#d98f3e] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f5af58]"
         >
           使い方を見る
         </a>
