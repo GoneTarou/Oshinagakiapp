@@ -26,13 +26,13 @@
   </div>
 
   <div>
-    <%= item_form.label :space_number, "作者名またはサークル情報", class: "label" do %>
-      <span class="label-text">作者名またはサークル情報 (任意) <span class="text-base-content/60"></span></span>
+    <%= item_form.label :space_number, "メモ", class: "label" do %>
+      <span class="label-text">メモ (任意) <span class="text-base-content/60"></span></span>
     <% end %>
     <%= item_form.text_field :space_number,
-          placeholder: "例：作者名(サークル名、東A-12b)",
+          placeholder: "例：作者名、サークル名、購入予定日",
           class: "input input-bordered w-full#{" input-error" if item_form.object.errors[:space_number].any?}",
-          maxlength: 100,
+          maxlength: 30,
           aria: { invalid: item_form.object.errors[:space_number].any? } %>
     <% item_form.object.errors.where(:space_number).each do |error| %>
       <p class="mt-2 text-sm text-error" role="alert"><%= error.full_message %></p>
