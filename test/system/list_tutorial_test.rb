@@ -11,18 +11,18 @@ class ListTutorialTest < ApplicationSystemTestCase
   test "shows the tutorial on the first visit and can reopen it" do
     visit new_list_path
 
-    assert_selector "dialog[open]", text: "1 / 4"
+    assert_selector "dialog[open]", text: "1 / 5"
     assert_selector "img[alt='イベントを選択する画面']", visible: true
 
     click_button "次へ"
 
-    assert_selector "dialog[open]", text: "2 / 4"
+    assert_selector "dialog[open]", text: "2 / 5"
     assert_selector "img[alt='巡回先を登録する画面']", visible: true
     assert_button "戻る", visible: true
 
     click_button "戻る"
 
-    assert_selector "dialog[open]", text: "1 / 4"
+    assert_selector "dialog[open]", text: "1 / 5"
     assert_no_button "戻る", visible: true
 
     click_button "次へ"
@@ -31,8 +31,13 @@ class ListTutorialTest < ApplicationSystemTestCase
 
     click_button "次へ"
 
-    assert_selector "dialog[open]", text: "4 / 4"
+    assert_selector "dialog[open]", text: "4 / 5"
     assert_selector "img[alt='既存のリストを活用して新しくリストを作成する画面']", visible: true
+
+    click_button "次へ"
+
+    assert_selector "dialog[open]", text: "5 / 5"
+    assert_selector "img[alt='Xに巡回リストを共有する画面']", visible: true
     assert_button "はじめる", visible: true
 
     click_button "はじめる"
@@ -45,6 +50,6 @@ class ListTutorialTest < ApplicationSystemTestCase
 
     click_button "使い方を見る"
 
-    assert_selector "dialog[open]", text: "1 / 4"
+    assert_selector "dialog[open]", text: "1 / 5"
   end
 end
