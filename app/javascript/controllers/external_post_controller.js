@@ -2,6 +2,34 @@ import { Controller } from "@hotwired/stimulus"
 
 let twitterWidgetsPromise
 
+const xPostQueue = []
+let xPostQueueRunning = false
+
+function enqueueXPost(task) {
+  xPostQueue.push(task)
+  void processXPostQueue()
+}
+
+async function processXPostQueue() {
+  if (xPostQueueRunning) return
+
+  xPostQueueRunning = true
+
+  try {
+    while (xPostQueue.length > 0) {
+      const task = xPostQueue.shift()
+
+      try {
+        await task()
+      } catch {
+        // 個別の投稿失敗では、後続の投稿を止めない
+      }
+    }
+  } finally {
+    xPostQueueRunning = false
+  }
+}
+
 export default class extends Controller {
   static values = {
     url: String,
@@ -25,7 +53,7 @@ export default class extends Controller {
     }
 
     if (this.isXUrl(url)) {
-      void this.loadXWidget(url)
+      this.setupXWidgetLoading(url)
       return
     }
 
@@ -39,6 +67,7 @@ export default class extends Controller {
 
   disconnect() {
     this.detailsElement?.removeEventListener("toggle", this.detailsToggleHandler)
+    this.xPostObserver?.disconnect()
   }
 
   parseUrl() {
@@ -124,7 +153,35 @@ export default class extends Controller {
     this.fallbackTarget.hidden = false
   }
 
+  setupXWidgetLoading(url) {
+    if (!("IntersectionObserver" in window)) {
+      this.enqueueXWidget(url)
+      return
+    }
+
+    this.xPostObserver = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return
+
+        this.xPostObserver.disconnect()
+        this.enqueueXWidget(url)
+      },
+      { rootMargin: "600px 0px" }
+    )
+
+    this.xPostObserver.observe(this.element)
+  }
+
+  enqueueXWidget(url) {
+    if (this.xPostQueued || this.xPostStarted) return
+
+    this.xPostQueued = true
+    enqueueXPost(() => this.loadXWidget(url))
+  }
+
   async loadXWidget(url) {
+    if (!this.element.isConnected || this.xPostStarted) return
+
     const tweetId = this.extractTweetId(url)
 
     if (!tweetId) {
@@ -132,13 +189,20 @@ export default class extends Controller {
       return
     }
 
-    this.renderXPost(url)
+    this.xPostStarted = true
 
     try {
       await this.loadTwitterWidgets()
+
+      if (!this.element.isConnected) return
+
+      this.renderXPost(url)
       window.twttr.widgets.load(this.contentTarget)
+      this.xPostLoaded = true
     } catch {
-      this.showXPreviewUnavailable()
+      if (this.element.isConnected) {
+        this.showXPreviewUnavailable()
+      }
     }
   }
 
@@ -163,6 +227,7 @@ export default class extends Controller {
     this.contentTarget.hidden = false
     this.noticeTarget.hidden = false
     this.fallbackTarget.hidden = false
+    this.errorTarget.hidden = true
   }
 
   loadTwitterWidgets() {
