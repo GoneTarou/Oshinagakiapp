@@ -9,10 +9,10 @@
 <div class="grid gap-4 sm:grid-cols-2">
   <div>
     <%= item_form.label :source_url, "外部ポストURL（X・pixiv）", class: "label" do %>
-      <span class="label-text">外部ポストURL（X・pixiv） <span class="text-base-content/60"></span></span>
+      <span class="label-text">XのポストURL <span class="text-base-content/60"></span></span>
     <% end %>
     <%= item_form.url_field :source_url,
-          placeholder: "XもしくはpixivのURLのみ入力できます",
+          placeholder: "Xの投稿またはpixiv作品のURLのみ入力できます",
           class: "input input-bordered w-full#{" input-error" if item_form.object.errors[:source_url].any?}",
           maxlength: 2048,
           aria: { invalid: item_form.object.errors[:source_url].any? },
