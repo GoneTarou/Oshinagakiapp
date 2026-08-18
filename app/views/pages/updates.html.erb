@@ -1,7 +1,7 @@
 <% content_for :title, "更新情報 / 即売会しおり" %>
 
 <div
-  class="min-h-screen w-full bg-[#f5af58] bg-cover bg-center bg-no-repeat px-5 py-12 text-base-content sm:py-16"
+  class="min-h-screen w-full bg-[#f5af58] bg-cover bg-center bg-no-repeat px-5 pb-24 pt-12 text-base-content sm:pb-28 sm:pt-16"
   style="background-image: url('<%= asset_path("sikakuf8.png") %>');"
 >
   <main class="mx-auto w-full max-w-3xl" aria-labelledby="updates-title">
@@ -14,12 +14,39 @@
     <div class="space-y-5">
       <article class="card card-compact bg-base-100 shadow-sm">
         <div class="card-body">
+          <time datetime="2026-08-18" class="text-sm font-bold text-[#d98f3e]">
+            2026年8月18日
+          </time>
+          <h2 class="card-title mt-1">使い方チュートリアルを追加しました</h2>
+          <p class="mt-2">
+            初めてリスト作成画面を開いたとき、操作方法を案内するモーダルが表示されます。
+          </p>
+          <ul class="mt-2 list-disc space-y-2 pl-5">
+            <li>イベントの選択からXでの共有まで、5ステップで操作を案内します。</li>
+            <li>「使い方を見る」から、いつでもチュートリアルを再表示できます。</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card card-compact bg-base-100 shadow-sm">
+        <div class="card-body">
+          <time datetime="2026-08-18" class="text-sm font-bold text-[#d98f3e]">
+            2026年8月18日
+          </time>
+          <h2 class="card-title mt-1">既存のリストを活用できるようになりました</h2>
+          <p class="mt-2">
+            共有リストの内容を引き継いで、新しい巡回リストを作成できるようになりました。
+          </p>
+        </div>
+      </article>
+
+      <article class="card card-compact bg-base-100 shadow-sm">
+        <div class="card-body">
           <time datetime="2026-08-17" class="text-sm font-bold text-[#d98f3e]">
             2026年8月17日
           </time>
           <h2 class="card-title mt-1">リスト作成をもっと便利にしました</h2>
           <ul class="mt-2 list-disc space-y-2 pl-5">
-            <li>共有リストの内容を使って、新しい巡回リストを作成できるようにしました。</li>
             <li>作成途中の入力内容をブラウザに保存し、戻ったときに復元できるようにしました。</li>
             <li>短時間での連続作成を制限し、不正利用への対策を追加しました。</li>
           </ul>

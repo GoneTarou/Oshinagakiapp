@@ -3,6 +3,9 @@ require "application_system_test_case"
 class ListDraftsTest < ApplicationSystemTestCase
   setup do
     visit root_path
+    page.execute_script(
+      "window.localStorage.setItem('oshinagaki:list-tutorial:v1', 'true')"
+    )
     page.execute_script("window.sessionStorage.clear()")
     click_link "＋ 新しい巡回リストを作る"
   end
