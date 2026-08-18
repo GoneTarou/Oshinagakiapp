@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_16_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_18_180000) do
   create_table "events", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name"
@@ -26,10 +26,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_16_000000) do
     t.string "source_url"
     t.string "space_number"
     t.datetime "updated_at", null: false
-    t.index ["list_id", "space_number"], name: "index_list_items_on_list_id_and_space_number", unique: true
     t.index ["list_id"], name: "index_list_items_on_list_id"
     t.check_constraint "length(source_url) <= 2048", name: "check_list_items_source_url_length"
-    t.check_constraint "length(space_number) <= 100", name: "check_list_items_space_number_length"
+    t.check_constraint "length(space_number) <= 30", name: "check_list_items_space_number_length"
   end
 
   create_table "lists", force: :cascade do |t|

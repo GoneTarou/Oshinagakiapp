@@ -54,15 +54,15 @@ class ListItemTest < ActiveSupport::TestCase
     assert_nil item.source_url
   end
 
-  test "limits author or circle information to 100 characters" do
-    item = @list.list_items.build(space_number: "あ" * 100)
+  test "limits memo to 30 characters" do
+    item = @list.list_items.build(space_number: "あ" * 30)
 
     assert item.valid?
 
-    item.space_number = "あ" * 101
+    item.space_number = "あ" * 31
 
     assert_not item.valid?
-    assert_includes item.errors.details[:space_number], { error: :too_long, count: 100 }
+    assert_includes item.errors.details[:space_number], { error: :too_long, count: 30 }
   end
 
   test "limits source URLs to 2,048 characters" do
