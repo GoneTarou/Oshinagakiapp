@@ -1,8 +1,140 @@
 <% content_for :title, "巡回リストを作成 | 即売会しおり" %>
 
 <div class="min-h-screen w-full bg-[#f5af58] px-5 py-10 text-white">
-  <div class="mx-auto w-full max-w-3xl">
-    <header class="mb-8 text-center">
+  <div
+    class="mx-auto w-full max-w-3xl"
+    data-controller="list-tutorial"
+    data-list-tutorial-storage-key-value="oshinagaki:list-tutorial:v1"
+  >
+    <dialog
+      class="modal"
+      aria-labelledby="list-tutorial-title"
+      data-list-tutorial-target="dialog"
+      data-action="cancel->list-tutorial#skip"
+    >
+      <div class="modal-box w-11/12 max-w-3xl border-2 border-[#f5af58] bg-white p-0 text-base-content">
+        <div class="bg-[#f5af58] px-6 py-4 text-white">
+          <p
+            class="text-sm font-bold tracking-wide"
+            data-list-tutorial-target="progress"
+          ></p>
+        </div>
+
+        <div class="p-6 sm:p-8">
+          <section data-list-tutorial-target="step">
+            <p class="text-sm font-bold text-[#f5af58]">STEP 1</p>
+            <h2 id="list-tutorial-title" class="mt-2 text-2xl font-bold">
+              イベントを選ぶ
+            </h2>
+            <p class="mt-4 leading-7 text-base-content/70">
+              参加する即売会を選択してください。
+            </p>
+            <%= image_tag "11.png",
+                  alt: "イベントを選択する画面",
+                  class: "mt-5 max-h-[50vh] w-full rounded-lg border border-base-300 object-contain" %>
+          </section>
+
+          <section data-list-tutorial-target="step" hidden>
+            <p class="text-sm font-bold text-[#f5af58]">STEP 2</p>
+            <h2 class="mt-2 text-2xl font-bold">
+              巡回先を登録する
+            </h2>
+            <p class="mt-4 leading-7 text-base-content/70">
+              Xの投稿URLまたはpixiv作品URL、作者名・サークル情報を入力します。
+            </p>
+            <%= image_tag "22.png",
+                  alt: "巡回先を登録する画面",
+                  class: "mt-5 max-h-[50vh] w-full rounded-lg border border-base-300 object-contain" %>
+          </section>
+
+          <section data-list-tutorial-target="step" hidden>
+            <p class="text-sm font-bold text-[#f5af58]">STEP 3</p>
+            <h2 class="mt-2 text-2xl font-bold">
+              リストを作成して共有する
+            </h2>
+            <p class="mt-4 leading-7 text-base-content/70">
+              「巡回リストを作成」を押すとリストが表示され、「Xで共有する」を押すとXで共有できます。
+            </p>
+            <%= image_tag "44.png",
+                  alt: "リストを作成して共有する画面",
+                  class: "mt-5 max-h-[50vh] w-full rounded-lg border border-base-300 object-contain" %>
+          </section>
+
+          <section data-list-tutorial-target="step" hidden>
+            <p class="text-sm font-bold text-[#f5af58]">STEP 4</p>
+            <h2 class="mt-2 text-2xl font-bold">
+              既存のリストを活用して新しくリストを作る
+            </h2>
+            <p class="mt-4 leading-7 text-base-content/70">
+              共有リストの内容を引き継いで、新しい巡回リストを作成できます。
+            </p>
+            <%= image_tag "55.png",
+                  alt: "既存のリストを活用して新しくリストを作成する画面",
+                  class: "mt-5 max-h-[50vh] w-full rounded-lg border border-base-300 object-contain" %>
+          </section>
+
+          <div class="mt-8 flex items-center justify-between gap-4">
+            <button
+              type="button"
+              class="text-sm font-bold text-base-content/60 underline underline-offset-4 transition hover:text-[#f5af58]"
+              data-action="click->list-tutorial#skip"
+            >
+              スキップ
+            </button>
+
+            <div class="flex items-center gap-2">
+              <button
+                type="button"
+                class="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-[#f5af58] bg-white px-5 font-bold text-[#f5af58] transition hover:bg-[#fff4e8]"
+                data-list-tutorial-target="previousButton"
+                data-action="click->list-tutorial#previous"
+                hidden
+              >
+                戻る
+              </button>
+
+              <button
+                type="button"
+                class="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-[#f5af58] bg-[#f5af58] px-6 font-bold text-white transition hover:bg-[#d98f3e]"
+                data-list-tutorial-target="nextButton"
+                data-action="click->list-tutorial#next"
+              >
+                次へ
+              </button>
+
+              <button
+                type="button"
+                class="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-[#f5af58] bg-[#f5af58] px-6 font-bold text-white transition hover:bg-[#d98f3e]"
+                data-list-tutorial-target="finishButton"
+                data-action="click->list-tutorial#finish"
+                hidden
+              >
+                はじめる
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <form method="dialog" class="modal-backdrop">
+        <button
+          type="button"
+          aria-label="チュートリアルを閉じる"
+          data-action="click->list-tutorial#skip"
+        >
+          閉じる
+        </button>
+      </form>
+    </dialog>
+
+    <header class="relative mb-8 text-center">
+      <button
+        type="button"
+        class="absolute bottom-0 right-0 inline-flex min-h-11 items-center justify-center rounded-full border-2 border-white bg-white px-4 text-sm font-bold text-[#f5af58] transition hover:bg-[#f3f3f3]"
+        data-action="click->list-tutorial#open"
+      >
+        使い方を見る
+      </button>
       <p class="app-name text-4xl font-normal tracking-[0.08em] text-white sm:text-5xl">即売会しおり</p>
       <h1 class="mt-6 text-3xl font-bold text-white">巡回リストを作成</h1>
       <p class="mt-3 text-base text-white">
