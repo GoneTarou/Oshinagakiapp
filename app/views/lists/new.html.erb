@@ -174,7 +174,7 @@
         url: lists_path,
         class: "space-y-8",
         data: {
-          controller: "featured-items list-draft",
+          controller: "featured-items list-draft event-scroll",
           action: "input->list-draft#save change->list-draft#save",
           list_draft_reset_value: params[:reset_draft] == "1",
           turbo: false
@@ -199,7 +199,11 @@
           <% end %>
           <%= form.collection_select :event_id, @events, :id, :name,
                 { prompt: "イベントを選択してください" },
-                { class: "select select-bordered w-full", required: true } %>
+                {
+                  class: "select select-bordered w-full",
+                  required: true,
+                  data: { action: "change->event-scroll#scrollToSourceUrl" }
+                } %>
           <% @list.errors.where(:event).each do |error| %>
             <p class="mt-2 text-sm text-error" role="alert"><%= error.full_message %></p>
           <% end %>

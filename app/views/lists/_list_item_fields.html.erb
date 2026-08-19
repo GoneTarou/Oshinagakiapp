@@ -18,6 +18,7 @@
           aria: { invalid: item_form.object.errors[:source_url].any? },
           data: {
             post_preview_target: "input",
+            event_scroll_target: ("sourceUrl" if index.zero?),
             action: "input->post-preview#queueRender"
           } %>
     <% item_form.object.errors.where(:source_url).each do |error| %>
