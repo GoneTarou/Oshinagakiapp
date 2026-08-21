@@ -20,6 +20,7 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     get root_path
 
     assert_response :success
+    assert_select "html[data-theme='light']"
     assert_select "nav a[href='#{updates_path}']", text: "更新情報"
   end
 end
