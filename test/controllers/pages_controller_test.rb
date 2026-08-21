@@ -23,6 +23,7 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     assert_select "html[data-theme='light']"
     assert_select "nav a[href='#{updates_path}']", text: "更新情報"
     assert_select "section[aria-labelledby='home-notice-title']" do
+      assert_select "li", text: "ユーザー登録・ログイン不要"
       assert_select "a[href='#{how_to_path}']", text: "使い方を確認する"
     end
     assert_select "a[href='#{new_list_path(reset_draft: 1)}']", text: "＋ 新しい巡回リストを作る"
