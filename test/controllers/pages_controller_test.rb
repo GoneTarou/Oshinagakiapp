@@ -21,6 +21,7 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "html[data-theme='light']"
+    assert_select "h1.home-title", text: "即売会しおり"
     assert_select "nav a[href='#{updates_path}']", text: "更新情報"
     assert_select "section[aria-labelledby='home-notice-title']" do
       assert_select "li", text: "ユーザー登録・ログインは一切不要です"

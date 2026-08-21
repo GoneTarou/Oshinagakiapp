@@ -18,3 +18,8 @@
 .app-name {
   font-family: "NicoMoj i Plus", sans-serif;
 }
+
+.home-title {
+  -webkit-text-stroke: 2px #fff7ed;
+  paint-order: stroke fill;
+}
