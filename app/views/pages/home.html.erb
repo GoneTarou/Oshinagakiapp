@@ -18,13 +18,9 @@
         DOJIN EVENT MEMO
       </p>
 
-      <div class="mt-10 flex flex-col items-center justify-center gap-4 lg:flex-row">
-        <%= link_to "使い方を確認する",
-              how_to_path,
-              class: "inline-flex min-h-20 w-full cursor-pointer items-center justify-center whitespace-nowrap rounded-full border-2 border-white bg-white px-6 text-lg font-bold text-[#f5af58] transition hover:border-[#ededed] hover:bg-[#ededed] hover:text-[#f5af58] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:min-h-24 lg:w-[23rem] lg:px-8 lg:text-2xl" %>
-
+      <div class="mt-10 flex justify-center">
         <%= link_to new_list_path(reset_draft: 1),
-              class: "inline-flex min-h-20 w-full cursor-pointer items-center justify-center whitespace-nowrap rounded-full border-2 border-white bg-white px-6 text-lg font-bold text-[#f5af58] transition hover:border-[#ededed] hover:bg-[#ededed] hover:text-[#f5af58] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:min-h-24 lg:w-[23rem] lg:px-8 lg:text-2xl" do %>
+              class: "inline-flex min-h-20 w-full max-w-[23rem] cursor-pointer items-center justify-center whitespace-nowrap rounded-full border-2 border-white bg-white px-6 text-lg font-bold text-[#f5af58] transition hover:border-[#ededed] hover:bg-[#ededed] hover:text-[#f5af58] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:min-h-24 lg:px-8 lg:text-2xl" do %>
           ＋ 新しい巡回リストを作る
         <% end %>
       </div>
@@ -42,6 +38,10 @@
           <li>Xのお品書きポストのURLを入力するとプレビューが表示され、確認することができます</li>
           <li>リストを作成すると共有URLが発行されます</li>
         </ul>
+
+        <%= link_to "使い方を確認する",
+              how_to_path,
+              class: "mt-6 inline-flex min-h-12 cursor-pointer items-center justify-center whitespace-nowrap rounded-full border-2 border-[#f5af58] bg-[#f5af58] px-6 text-sm font-bold text-white transition hover:border-[#d98f3e] hover:bg-[#d98f3e] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f5af58] sm:min-h-14 sm:px-8 sm:text-base" %>
 
       </section>
 
